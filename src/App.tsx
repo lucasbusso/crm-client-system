@@ -1,10 +1,16 @@
-import Header from "./components/Header";
+import { Container } from "react-bootstrap";
+import { Header, ClientsList, Form } from "./components";
 
 function App() {
   return (
     <>
-      <Header />
-      <div className="text-red-300">Holas</div>
+      <Container>
+        <Header />
+        <div className="w-full md:flex gap-[64px]">
+          <Form />
+          <ClientsList />
+        </div>
+      </Container>
     </>
   );
 }
