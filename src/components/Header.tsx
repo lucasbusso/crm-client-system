@@ -3,13 +3,16 @@ import Navbar from "react-bootstrap/Navbar";
 
 const Header = () => {
   return (
-    <Container>
-      <Navbar expand="lg" className="bg-body-tertiary">
-        <Container>
-          <Navbar.Brand href="#">Navbar</Navbar.Brand>
-        </Container>
-      </Navbar>
-    </Container>
+    <Navbar expand="lg" className="bg-body-tertiary">
+      <Container className="bg-indigo-500 h-[64px]">
+        <Navbar.Brand
+          href="#"
+          className="font-bold text-white text-center text-3xl w-full"
+        >
+          Client Manager
+        </Navbar.Brand>
+      </Container>
+    </Navbar>
   );
 };
 
