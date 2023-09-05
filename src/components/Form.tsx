@@ -1,10 +1,10 @@
 const Form = () => {
   return (
     <div className="md:w-1/2 w-full">
-      <h2 className="font-bold text-2xl my-6">Add new client</h2>
+      <h2 className="font-bold text-2xl my-6 text-center">Add new client</h2>
       <form className="bg-white shadow-sm rounded-md py-10 px-5">
         <div className="block mb-6">
-          <label htmlFor="name" className="uppercase font-bold text-slate-900">
+          <label htmlFor="name" className="uppercase font-bold text-slate-600">
             Name
           </label>
           <input
@@ -16,7 +16,7 @@ const Form = () => {
         <div className="block mb-6">
           <label
             htmlFor="business"
-            className="uppercase font-bold text-slate-900"
+            className="uppercase font-bold text-slate-600"
           >
             Business Name
           </label>
@@ -27,7 +27,7 @@ const Form = () => {
           />
         </div>
         <div className="block mb-6">
-          <label htmlFor="date" className="uppercase font-bold text-slate-900">
+          <label htmlFor="date" className="uppercase font-bold text-slate-600">
             Registration
           </label>
           <input
@@ -37,7 +37,7 @@ const Form = () => {
           />
         </div>
         <div className="block mb-6">
-          <label htmlFor="date" className="uppercase font-bold text-slate-900">
+          <label htmlFor="date" className="uppercase font-bold text-slate-600">
             Description (optional)
           </label>
           <textarea
