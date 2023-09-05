@@ -15,3 +15,8 @@ export interface FormHooks {
   ) => void;
   resetForm: () => void;
 }
+
+export interface NotificationProps {
+  errorMessage: string[];
+  error: boolean;
+}
