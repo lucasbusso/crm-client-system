@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "../hooks";
+import { FormValidator } from "../utils/validateForm";
+import Notification from "./Notification";
 
-const Form = () => {
+const Form: React.FC<object> = (): JSX.Element => {
+  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const { formData, handleInputChange } = useForm({
     name: "",
     business: "",
@@ -12,12 +16,28 @@ const Form = () => {
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log("Submit", formData);
+
+    FormValidator.validate(formData, { abortEarly: false })
+      .then(() => {
+        // console.log("Submit", formData);
+        setError(false);
+      })
+      .catch((e) => {
+        console.log(e.errors);
+        setError(true);
+        setErrorMessage(e.errors);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
+      });
   }
 
   return (
-    <div className="md:w-1/2 w-full mx-5">
+    <div className="md:w-1/2 w-full mx-5 relative">
       <h2 className="font-bold text-2xl my-6 text-center">Add new client</h2>
+      {error && <Notification errorMessage={errorMessage} error={error} />}
       <form
         className="bg-white shadow-sm rounded-md py-10 px-5"
         onSubmit={(e) => handleSubmit(e)}
