@@ -20,3 +20,11 @@ export interface NotificationProps {
   errorMessage: string[];
   error: boolean;
 }
+
+export type Client = {
+  name: string | null;
+  business: string | null;
+  date: string | null;
+  email: string | null;
+  description?: string | null;
+};
