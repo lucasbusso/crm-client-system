@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "../hooks";
 import { FormValidator } from "../utils/validateForm";
 import Notification from "./Notification";
+import { useClientContext } from "../context/client.context";
 
 const Form: React.FC<object> = (): JSX.Element => {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
-  const { formData, handleInputChange } = useForm({
+  const { clients, setClients } = useClientContext();
+  const { formData, handleInputChange, resetForm } = useForm({
     name: "",
     business: "",
     email: "",
@@ -19,8 +21,9 @@ const Form: React.FC<object> = (): JSX.Element => {
 
     FormValidator.validate(formData, { abortEarly: false })
       .then(() => {
-        // console.log("Submit", formData);
         setError(false);
+        setClients([...clients, formData]);
+        resetForm();
       })
       .catch((e) => {
         console.log(e.errors);
