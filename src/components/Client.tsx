@@ -9,7 +9,8 @@ const Client = () => {
         clients.map((client) => (
           <div
             className="m-3 bg-white shadow-md rounded-md px-5 py-10 "
-            key={client.name}
+            key={client.id}
+            data-clientid={client.id}
           >
             <p className="uppercase font-bold text-slate-600 my-3">
               Name:{" "}
