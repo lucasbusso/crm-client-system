@@ -6,6 +6,7 @@ export interface FormValues {
   date: string;
   email: string;
   description: string;
+  id: string;
 }
 
 export interface FormHooks {
@@ -14,6 +15,7 @@ export interface FormHooks {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   resetForm: () => void;
+  generateUniqueId: () => string;
 }
 
 export interface NotificationProps {
@@ -27,4 +29,5 @@ export type Client = {
   date: string | null;
   email: string | null;
   description?: string | null;
+  id: string;
 };
