@@ -39,6 +39,11 @@ const Client = () => {
             </p>
           </div>
         ))}
+      {clients.length === 0 && (
+        <div className="w-full h-full text-center mt-[32px]">
+          <p className="uppercase text-xl">No hay clientes registrados</p>
+        </div>
+      )}
     </>
   );
 };
