@@ -14,4 +14,5 @@ export const FormValidator = yup.object().shape({
     .min(8, "The email is too short"),
   date: yup.string().trim().required("Date is empty"),
   description: yup.string().trim(),
+  id: yup.string().trim(),
 });
