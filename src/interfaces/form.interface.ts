@@ -1,12 +1,12 @@
 import { ChangeEvent } from "react";
 
 export interface FormValues {
-  name: string;
-  business: string;
-  date: string;
-  email: string;
-  description: string;
-  id: string;
+  name: string | undefined;
+  business: string | undefined;
+  date: string | undefined;
+  email: string | undefined;
+  description: string | undefined;
+  id: string | undefined;
 }
 
 export interface FormHooks {
@@ -24,10 +24,10 @@ export interface NotificationProps {
 }
 
 export type Client = {
-  name: string | null;
-  business: string | null;
-  date: string | null;
-  email: string | null;
-  description?: string | null;
-  id: string;
+  name: string | undefined;
+  business: string | undefined;
+  date: string | undefined;
+  email: string | undefined;
+  description?: string | undefined;
+  id: string | undefined;
 };
