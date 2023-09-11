@@ -7,22 +7,14 @@ import { useClientContext } from "../context/client.context";
 const Form: React.FC<object> = (): JSX.Element => {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
-  const { clients, setClients } = useClientContext();
+  const { clients, setClients, emptyClient } = useClientContext();
   const {
     formData,
     handleInputChange,
     resetForm,
     generateUniqueId,
     generateDate,
-  } = useForm({
-    name: "",
-    business: "",
-    email: "",
-    date: "",
-    description: "",
-    id: "",
-    modifiedDate: "",
-  });
+  } = useForm(emptyClient);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
