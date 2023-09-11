@@ -85,9 +85,10 @@ const EditForm = (): JSX.Element => {
         <input
           name="date"
           type="date"
-          className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
+          className="border-2 w-full p-2 mt-2 placeholder-slate-500 bg-slate-200 rounded-md hover:cursor-not-allowed"
           value={clientEdited?.date}
           onChange={handleInputEdit}
+          disabled
         />
       </div>
       <div className="block mb-6">
