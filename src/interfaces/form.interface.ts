@@ -7,6 +7,7 @@ export interface FormValues {
   email: string | undefined;
   description: string | undefined;
   id: string | undefined;
+  modifiedDate: string;
 }
 
 export interface FormHooks {
@@ -16,6 +17,7 @@ export interface FormHooks {
   ) => void;
   resetForm: () => void;
   generateUniqueId: () => string;
+  generateDate: () => string;
 }
 
 export interface NotificationProps {
@@ -30,6 +32,7 @@ export type Client = {
   email: string | undefined;
   description?: string | undefined;
   id: string | undefined;
+  modifiedDate: string;
 };
 
 export type ClientEdit = {
@@ -39,4 +42,5 @@ export type ClientEdit = {
   email?: string;
   description?: string;
   id?: string;
+  modifiedDate: string;
 };
