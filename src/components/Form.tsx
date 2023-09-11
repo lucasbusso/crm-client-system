@@ -3,6 +3,7 @@ import { useForm } from "../hooks";
 import { FormValidator } from "../utils/validateForm";
 import Notification from "./Notification";
 import { useClientContext } from "../context/client.context";
+import { setLocalStorageClient } from "../utils/localStorage";
 
 const Form: React.FC<object> = (): JSX.Element => {
   const [error, setError] = useState<boolean>(false);
@@ -21,7 +22,7 @@ const Form: React.FC<object> = (): JSX.Element => {
         formData.id = generateUniqueId();
         formData.modifiedDate = generateDate();
         setClients([...clients, formData]);
-        console.log(formData);
+        setLocalStorageClient(formData);
       })
       .catch((e) => {
         console.log(e.errors);
