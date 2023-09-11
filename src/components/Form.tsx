@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { useForm } from "../hooks";
 import { FormValidator } from "../utils/validateForm";
 import Notification from "./Notification";
@@ -8,13 +8,8 @@ const Form: React.FC<object> = (): JSX.Element => {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const { clients, setClients, emptyClient } = useClientContext();
-  const {
-    formData,
-    handleInputChange,
-    resetForm,
-    generateUniqueId,
-    generateDate,
-  } = useForm(emptyClient);
+  const { formData, setFormData, resetForm, generateUniqueId, generateDate } =
+    useForm(emptyClient);
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -38,6 +33,16 @@ const Form: React.FC<object> = (): JSX.Element => {
           setError(false);
         }, 3000);
       });
+  }
+
+  function handleInputChange(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   }
 
   return (

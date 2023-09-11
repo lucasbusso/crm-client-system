@@ -1,29 +1,4 @@
-import { ChangeEvent } from "react";
-
-export interface FormValues {
-  name: string | undefined;
-  business: string | undefined;
-  date: string | undefined;
-  email: string | undefined;
-  description: string | undefined;
-  id: string | undefined;
-  modifiedDate: string;
-}
-
-export interface FormHooks {
-  formData: FormValues;
-  handleInputChange: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-  resetForm: () => void;
-  generateUniqueId: () => string;
-  generateDate: () => string;
-}
-
-export interface NotificationProps {
-  errorMessage: string[];
-  error: boolean;
-}
+import { SetStateAction, Dispatch } from "react";
 
 export type Client = {
   name: string | undefined;
@@ -44,3 +19,26 @@ export type ClientEdit = {
   id?: string;
   modifiedDate: string;
 };
+
+export interface FormHooks {
+  formData: Client;
+  setFormData: Dispatch<SetStateAction<Client>>;
+  resetForm: () => void;
+  generateUniqueId: () => string;
+  generateDate: () => string;
+}
+
+export interface NotificationProps {
+  errorMessage: string[];
+  error: boolean;
+}
+
+export interface ContextProps {
+  clients: Client[];
+  setClients: Dispatch<SetStateAction<Client[]>>;
+  clientId: string | undefined;
+  setClientId: Dispatch<SetStateAction<string | undefined>>;
+  updateClient: (client: ClientEdit) => void;
+  deleteClient: (clientId: string | undefined) => void;
+  emptyClient: Client;
+}

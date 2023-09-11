@@ -1,19 +1,9 @@
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { FormHooks, FormValues } from "../interfaces/form.interface";
+import { FormHooks, Client } from "../interfaces/form.interface";
 
-function useForm(initialValues: FormValues): FormHooks {
-  const [formData, setFormData] = useState<FormValues>(initialValues);
-
-  function handleInputChange(
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  }
+function useForm(initialValues: Client): FormHooks {
+  const [formData, setFormData] = useState<Client>(initialValues);
 
   function generateUniqueId() {
     const id = uuidv4();
@@ -40,7 +30,7 @@ function useForm(initialValues: FormValues): FormHooks {
 
   return {
     formData,
-    handleInputChange,
+    setFormData,
     resetForm,
     generateUniqueId,
     generateDate,
