@@ -20,11 +20,31 @@ function useForm(initialValues: FormValues): FormHooks {
     return id.toString();
   }
 
+  function generateDate() {
+    const date = new Date(Date.now());
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    return date.toLocaleDateString(undefined, options);
+  }
+
   function resetForm() {
     setFormData(initialValues);
   }
 
-  return { formData, handleInputChange, resetForm, generateUniqueId };
+  return {
+    formData,
+    handleInputChange,
+    resetForm,
+    generateUniqueId,
+    generateDate,
+  };
 }
 
 export default useForm;
