@@ -1,20 +1,5 @@
-import React, {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from "react";
-import { Client, ClientEdit, FormValues } from "../interfaces/form.interface";
-
-type ContextProps = {
-  clients: Client[];
-  setClients: Dispatch<SetStateAction<Client[]>>;
-  clientId: string | undefined;
-  setClientId: Dispatch<SetStateAction<string | undefined>>;
-  updateClient: (client: ClientEdit) => void;
-  emptyClient: FormValues;
-};
+import React, { createContext, useContext, useState } from "react";
+import { Client, ClientEdit, ContextProps } from "../interfaces/form.interface";
 
 const ClientContext = createContext<ContextProps | null>(null);
 
@@ -23,7 +8,8 @@ export const ClientProvider: React.FC<{
 }> = ({ children }) => {
   const [clients, setClients] = useState<Client[]>([]);
   const [clientId, setClientId] = useState<string | undefined>("");
-  const emptyClient = {
+
+  const emptyClient: Client = {
     name: "",
     business: "",
     email: "",
@@ -43,6 +29,12 @@ export const ClientProvider: React.FC<{
     );
   };
 
+  const deleteClient = (clientId: string | undefined) => {
+    setClients((prevClients) =>
+      prevClients.filter((client) => client.id !== clientId)
+    );
+  };
+
   const value: ContextProps = {
     clients,
     setClients,
@@ -50,6 +42,7 @@ export const ClientProvider: React.FC<{
     setClientId,
     updateClient,
     emptyClient,
+    deleteClient,
   };
   return (
     <ClientContext.Provider value={value}>{children}</ClientContext.Provider>
