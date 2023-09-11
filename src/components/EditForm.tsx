@@ -1,21 +1,38 @@
+import { ChangeEvent, useState, useEffect } from "react";
 import { useClientContext } from "../context/client.context";
-import { useForm } from "../hooks";
-import { Client } from "../interfaces/form.interface";
+import { ClientEdit } from "../interfaces/form.interface";
 
-const EditForm = ({ client }: { client: Client }): JSX.Element => {
-  const { formData, handleInputChange } = useForm({
-    name: client.name,
-    business: client.business,
-    email: client.email,
-    date: client.date,
-    description: client.description,
-    id: client.id,
-  });
-  const { clients, setClients } = useClientContext();
-  function handleSubmitEdit(e: React.FormEvent<HTMLFormElement>) {
+const EditForm = (): JSX.Element => {
+  const { clients, setIsEditing, isEditing, updateClient } = useClientContext();
+  const [clientEdited, setClientEdited] = useState<ClientEdit | undefined>(
+    undefined
+  );
+  console.log({ clientEdited }, { isEditing });
+
+  useEffect(() => {
+    const clientToEdit = clients.find((client) => client.id === isEditing);
+    if (clientToEdit) {
+      setClientEdited(clientToEdit);
+    }
+  }, [clients, isEditing]);
+
+  const handleSubmitEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setClients([...clients, formData]);
-  }
+    if (clientEdited) {
+      updateClient(clientEdited);
+      setIsEditing(undefined);
+    }
+  };
+
+  const handleInputEdit = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setClientEdited((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   return (
     <form
@@ -30,8 +47,8 @@ const EditForm = ({ client }: { client: Client }): JSX.Element => {
           name="name"
           type="text"
           className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-          value={client.name}
-          onChange={handleInputChange}
+          value={clientEdited?.name}
+          onChange={handleInputEdit}
         />
       </div>
       <div className="block mb-6">
@@ -45,8 +62,8 @@ const EditForm = ({ client }: { client: Client }): JSX.Element => {
           name="business"
           type="text"
           className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-          value={client.business}
-          onChange={handleInputChange}
+          value={clientEdited?.business}
+          onChange={handleInputEdit}
         />
       </div>
       <div className="block mb-6">
@@ -57,8 +74,8 @@ const EditForm = ({ client }: { client: Client }): JSX.Element => {
           name="email"
           type="email"
           className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-          value={client.email}
-          onChange={handleInputChange}
+          value={clientEdited?.email}
+          onChange={handleInputEdit}
         />
       </div>
       <div className="block mb-6">
@@ -69,8 +86,8 @@ const EditForm = ({ client }: { client: Client }): JSX.Element => {
           name="date"
           type="date"
           className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-          value={client.date}
-          onChange={handleInputChange}
+          value={clientEdited?.date}
+          onChange={handleInputEdit}
         />
       </div>
       <div className="block mb-6">
@@ -81,8 +98,8 @@ const EditForm = ({ client }: { client: Client }): JSX.Element => {
           name="description"
           id="description"
           className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-          value={client.description}
-          onChange={handleInputChange}
+          value={clientEdited?.description}
+          onChange={handleInputEdit}
         />
       </div>
 
