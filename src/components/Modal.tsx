@@ -4,12 +4,12 @@ import { useClientContext } from "../context/client.context";
 import EditForm from "./EditForm";
 
 const ModalComponent = (): JSX.Element => {
-  const { isEditing, setIsEditing, clients } = useClientContext();
-  const client = clients.find((client) => client.id === isEditing);
-  let showModal = isEditing ? true : false;
+  const { clientId, setClientId, clients } = useClientContext();
+  const client = clients.find((client) => client.id === clientId);
+  let showModal = clientId ? true : false;
 
   function handleModal() {
-    setIsEditing("");
+    setClientId("");
     showModal = false;
   }
 

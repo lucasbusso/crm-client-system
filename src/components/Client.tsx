@@ -2,7 +2,7 @@ import { useClientContext } from "../context/client.context";
 import ModalComponent from "./Modal";
 
 const Client = () => {
-  const { clients, setIsEditing } = useClientContext();
+  const { clients, setClientId } = useClientContext();
 
   return (
     <>
@@ -42,7 +42,7 @@ const Client = () => {
               <button
                 type="button"
                 className="py-2 px-5 bg-indigo-600 hover:bg-indigo-700 text-white uppercase font-bold rounded"
-                onClick={() => setIsEditing(client.id)}
+                onClick={() => setClientId(client.id)}
               >
                 Edit
               </button>

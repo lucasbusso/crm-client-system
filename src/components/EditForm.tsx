@@ -4,7 +4,7 @@ import { ClientEdit } from "../interfaces/form.interface";
 import { useForm } from "../hooks";
 
 const EditForm = (): JSX.Element => {
-  const { clients, setIsEditing, isEditing, updateClient, emptyClient } =
+  const { clients, setClientId, clientId, updateClient, emptyClient } =
     useClientContext();
   const [clientEdited, setClientEdited] = useState<ClientEdit | undefined>(
     emptyClient
@@ -13,17 +13,17 @@ const EditForm = (): JSX.Element => {
   const { generateDate } = useForm(emptyClient);
 
   useEffect(() => {
-    const clientToEdit = clients.find((client) => client.id === isEditing);
+    const clientToEdit = clients.find((client) => client.id === clientId);
     if (clientToEdit) {
       setClientEdited(clientToEdit);
     }
-  }, [clients, isEditing]);
+  }, [clients, clientId]);
 
   const handleSubmitEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (clientEdited) {
       updateClient(clientEdited);
-      setIsEditing(undefined);
+      setClientId("");
     }
   };
 

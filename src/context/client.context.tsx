@@ -10,8 +10,8 @@ import { Client, ClientEdit, FormValues } from "../interfaces/form.interface";
 type ContextProps = {
   clients: Client[];
   setClients: Dispatch<SetStateAction<Client[]>>;
-  isEditing: string | undefined;
-  setIsEditing: Dispatch<SetStateAction<string | undefined>>;
+  clientId: string | undefined;
+  setClientId: Dispatch<SetStateAction<string | undefined>>;
   updateClient: (client: ClientEdit) => void;
   emptyClient: FormValues;
 };
@@ -22,7 +22,7 @@ export const ClientProvider: React.FC<{
   children: JSX.Element;
 }> = ({ children }) => {
   const [clients, setClients] = useState<Client[]>([]);
-  const [isEditing, setIsEditing] = useState<string | undefined>("");
+  const [clientId, setClientId] = useState<string | undefined>("");
   const emptyClient = {
     name: "",
     business: "",
@@ -46,8 +46,8 @@ export const ClientProvider: React.FC<{
   const value: ContextProps = {
     clients,
     setClients,
-    isEditing,
-    setIsEditing,
+    clientId,
+    setClientId,
     updateClient,
     emptyClient,
   };
