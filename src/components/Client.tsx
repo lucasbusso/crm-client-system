@@ -54,6 +54,9 @@ const Client = () => {
               </button>
             </div>
             <ModalComponent />
+            <div className="pt-4 text-sm text-slate-400 flex justify-end">
+              {client.modifiedDate}
+            </div>
           </div>
         ))
       ) : (
