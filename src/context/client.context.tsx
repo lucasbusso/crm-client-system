@@ -5,7 +5,7 @@ import React, {
   useContext,
   useState,
 } from "react";
-import { Client, ClientEdit } from "../interfaces/form.interface";
+import { Client, ClientEdit, FormValues } from "../interfaces/form.interface";
 
 type ContextProps = {
   clients: Client[];
@@ -13,6 +13,7 @@ type ContextProps = {
   isEditing: string | undefined;
   setIsEditing: Dispatch<SetStateAction<string | undefined>>;
   updateClient: (client: ClientEdit) => void;
+  emptyClient: FormValues;
 };
 
 const ClientContext = createContext<ContextProps | null>(null);
@@ -22,6 +23,15 @@ export const ClientProvider: React.FC<{
 }> = ({ children }) => {
   const [clients, setClients] = useState<Client[]>([]);
   const [isEditing, setIsEditing] = useState<string | undefined>("");
+  const emptyClient = {
+    name: "",
+    business: "",
+    email: "",
+    date: "",
+    description: "",
+    id: "",
+    modifiedDate: "",
+  };
 
   const updateClient = (updatedClient: ClientEdit) => {
     setClients((prevClients) =>
@@ -39,6 +49,7 @@ export const ClientProvider: React.FC<{
     isEditing,
     setIsEditing,
     updateClient,
+    emptyClient,
   };
   return (
     <ClientContext.Provider value={value}>{children}</ClientContext.Provider>
