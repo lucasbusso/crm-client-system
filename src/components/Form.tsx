@@ -8,13 +8,20 @@ const Form: React.FC<object> = (): JSX.Element => {
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string[]>([]);
   const { clients, setClients } = useClientContext();
-  const { formData, handleInputChange, resetForm, generateUniqueId } = useForm({
+  const {
+    formData,
+    handleInputChange,
+    resetForm,
+    generateUniqueId,
+    generateDate,
+  } = useForm({
     name: "",
     business: "",
     email: "",
     date: "",
     description: "",
     id: "",
+    modifiedDate: "",
   });
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -25,6 +32,7 @@ const Form: React.FC<object> = (): JSX.Element => {
         setError(false);
         resetForm();
         formData.id = generateUniqueId();
+        formData.modifiedDate = generateDate();
         setClients([...clients, formData]);
         console.log(formData);
       })

@@ -31,7 +31,7 @@ const ModalComponent = (): JSX.Element => {
               X
             </Button>
           </Modal.Header>
-          <EditForm client={client} />
+          <EditForm />
         </Modal>
       )}
     </>
