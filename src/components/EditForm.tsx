@@ -1,13 +1,16 @@
 import { ChangeEvent, useState, useEffect } from "react";
 import { useClientContext } from "../context/client.context";
 import { ClientEdit } from "../interfaces/form.interface";
+import { useForm } from "../hooks";
 
 const EditForm = (): JSX.Element => {
-  const { clients, setIsEditing, isEditing, updateClient } = useClientContext();
+  const { clients, setIsEditing, isEditing, updateClient, emptyClient } =
+    useClientContext();
   const [clientEdited, setClientEdited] = useState<ClientEdit | undefined>(
-    undefined
+    emptyClient
   );
-  console.log({ clientEdited }, { isEditing });
+
+  const { generateDate } = useForm(emptyClient);
 
   useEffect(() => {
     const clientToEdit = clients.find((client) => client.id === isEditing);
@@ -31,6 +34,7 @@ const EditForm = (): JSX.Element => {
     setClientEdited((prevData) => ({
       ...prevData,
       [name]: value,
+      modifiedDate: generateDate(),
     }));
   };
 
