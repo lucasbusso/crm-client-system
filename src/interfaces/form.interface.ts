@@ -31,3 +31,12 @@ export type Client = {
   description?: string | undefined;
   id: string | undefined;
 };
+
+export type ClientEdit = {
+  name?: string;
+  business?: string;
+  date?: string;
+  email?: string;
+  description?: string;
+  id?: string;
+};
