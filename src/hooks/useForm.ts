@@ -13,7 +13,6 @@ function useForm(initialValues: Client): FormHooks {
   function generateDate() {
     const date = new Date(Date.now());
     const options: Intl.DateTimeFormatOptions = {
-      weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",

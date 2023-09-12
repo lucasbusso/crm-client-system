@@ -1,5 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { Client, ClientEdit, ContextProps } from "../interfaces/form.interface";
+import {
+  deleteLocalStorageClient,
+  retrieveClientsFromLocalStorage,
+  setLocalStorageClient,
+} from "../utils/localStorage";
 
 const ClientContext = createContext<ContextProps | null>(null);
 
@@ -19,6 +24,11 @@ export const ClientProvider: React.FC<{
     modifiedDate: "",
   };
 
+  useEffect(() => {
+    const clientsFromLocalStorage = retrieveClientsFromLocalStorage();
+    setClients(clientsFromLocalStorage);
+  }, []);
+
   const updateClient = (updatedClient: ClientEdit) => {
     setClients((prevClients) =>
       prevClients.map((client) =>
@@ -27,12 +37,14 @@ export const ClientProvider: React.FC<{
           : client
       )
     );
+    setLocalStorageClient(updatedClient);
   };
 
   const deleteClient = (clientId: string | undefined) => {
     setClients((prevClients) =>
       prevClients.filter((client) => client.id !== clientId)
     );
+    deleteLocalStorageClient(clientId!);
   };
 
   const value: ContextProps = {
