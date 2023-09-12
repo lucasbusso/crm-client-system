@@ -1,17 +1,16 @@
 import { Container } from "react-bootstrap";
-import { Header, ClientsList, Form } from "./components";
 import { ClientProvider } from "./context/client.context";
+import { BrowserRouter } from "react-router-dom";
+import { AppRouter } from "./Router";
 
 function App() {
   return (
     <ClientProvider>
-      <Container>
-        <Header />
-        <div className="w-full md:flex gap-[64px]">
-          <Form />
-          <ClientsList />
-        </div>
-      </Container>
+      <BrowserRouter>
+        <Container>
+          <AppRouter />
+        </Container>
+      </BrowserRouter>
     </ClientProvider>
   );
 }
