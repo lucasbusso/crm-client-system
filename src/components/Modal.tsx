@@ -28,7 +28,7 @@ const ModalComponent = (): JSX.Element => {
               onClick={handleModal}
               className="text-black text-2xl hover:bg-transparent border-none"
             >
-              X
+              ✕
             </Button>
           </Modal.Header>
           <EditForm />

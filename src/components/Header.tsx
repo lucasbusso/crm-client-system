@@ -9,7 +9,7 @@ const Header = () => {
           href="#"
           className="font-bold text-white text-center text-3xl w-full"
         >
-          Client Manager
+          ✦ Client Manager ✦
         </Navbar.Brand>
       </Container>
     </Navbar>
