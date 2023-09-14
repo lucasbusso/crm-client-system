@@ -1,18 +1,21 @@
 import { Container } from "react-bootstrap";
-import { Header, ClientsList, Form } from "./components";
 import { ClientProvider } from "./context/client.context";
+import { BrowserRouter } from "react-router-dom";
+import { AppRouter } from "./Router";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 function App() {
   return (
-    <ClientProvider>
-      <Container>
-        <Header />
-        <div className="w-full md:flex gap-[64px]">
-          <Form />
-          <ClientsList />
-        </div>
-      </Container>
-    </ClientProvider>
+    <Provider store={store}>
+      <ClientProvider>
+        <BrowserRouter>
+          <Container>
+            <AppRouter />
+          </Container>
+        </BrowserRouter>
+      </ClientProvider>
+    </Provider>
   );
 }
 
