@@ -4,7 +4,7 @@ import {
   deleteLocalStorageClient,
   retrieveClientsFromLocalStorage,
   setLocalStorageClient,
-} from "../utils/localStorage";
+} from "../utils";
 
 const ClientContext = createContext<ContextProps | null>(null);
 
