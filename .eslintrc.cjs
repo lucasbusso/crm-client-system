@@ -15,5 +15,8 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react-hooks/exhaustive-deps": "off",
   },
 };
