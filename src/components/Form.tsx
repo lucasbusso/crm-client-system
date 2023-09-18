@@ -1,9 +1,8 @@
 import React, { useState, ChangeEvent } from "react";
 import { useForm } from "../hooks";
-import { FormValidator } from "../utils/validateForm";
+import { FormValidator, setLocalStorageClient } from "../utils";
 import Notification from "./Notification";
 import { useClientContext } from "../context/client.context";
-import { setLocalStorageClient } from "../utils/localStorage";
 
 const Form: React.FC<object> = (): JSX.Element => {
   const [error, setError] = useState<boolean>(false);
