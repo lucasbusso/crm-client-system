@@ -23,7 +23,7 @@ const NavbarComponent = () => {
       <Container className="bg-indigo-500 h-[64px] w-full flex justify-between">
         <h1
           className="font-bold text-white text-center text-3xl cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/dashboard")}
         >
           ✦ Client Manager ✦
         </h1>
