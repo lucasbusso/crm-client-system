@@ -6,7 +6,7 @@ import { useAppSelector } from "../redux/hooks";
 
 export const RouterLayout: React.FC<{}> = () => {
   const [, setCookie, remove] = useCookies();
-  const { isAuth, isExpired, accessToken } = useAppSelector(
+  const { isExpired, accessToken } = useAppSelector(
     (state) => state.authReducer
   );
 
@@ -22,14 +22,8 @@ export const RouterLayout: React.FC<{}> = () => {
     }
   }, [isExpired]);
 
-  return isAuth ? (
+  return (
     <>
-      <NavbarComponent />
-      <Outlet />
-    </>
-  ) : (
-    <>
-      <Navigate to="/login" />
       <NavbarComponent />
       <Outlet />
     </>
