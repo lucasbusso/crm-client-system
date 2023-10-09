@@ -46,7 +46,7 @@ const Form: React.FC<object> = (): JSX.Element => {
   }
 
   return (
-    <div className="md:w-1/2 w-full mx-5 relative">
+    <div className="md:w-1/2 w-full relative">
       <h2 className="font-bold text-2xl my-6 text-center">Add new client</h2>
       {error && <Notification errorMessage={errorMessage} error={error} />}
       <form
