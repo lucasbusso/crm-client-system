@@ -5,11 +5,11 @@ const Client = () => {
   const { clients, setClientId, deleteClient } = useClientContext();
 
   return (
-    <>
+    <div className="md:max-h-[100%] md:h-[660px] md:overflow-y-scroll">
       {clients.length ? (
         clients.map((client) => (
           <div
-            className="m-3 bg-white shadow-md rounded-md px-5 py-10 "
+            className="mr-3 mb-3 bg-white shadow-md rounded-md px-5 py-10 "
             key={client.id}
             data-clientid={client.id}
           >
@@ -65,7 +65,7 @@ const Client = () => {
           <p className="uppercase text-xl">There are no registered clients</p>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
