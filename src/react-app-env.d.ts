@@ -8,5 +8,6 @@ declare namespace NodeJS {
     REACT_APP_STORAGE_BUCKET: string;
     REACT_APP_MESSAGING_SENDER_ID: string;
     REACT_APP_APP_ID: string;
+    REACT_APP_API_URL: string;
   }
 }
