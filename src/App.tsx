@@ -5,17 +5,20 @@ import { AppRouter } from "./Router";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { RegisterProvider } from "./context/register.context";
+import { LoginProvider } from "./context/login.context";
 
 function App() {
   return (
     <Provider store={store}>
       <ClientProvider>
         <RegisterProvider>
-          <BrowserRouter>
-            <Container>
-              <AppRouter />
-            </Container>
-          </BrowserRouter>
+          <LoginProvider>
+            <BrowserRouter>
+              <Container>
+                <AppRouter />
+              </Container>
+            </BrowserRouter>
+          </LoginProvider>
         </RegisterProvider>
       </ClientProvider>
     </Provider>
