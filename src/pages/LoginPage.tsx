@@ -2,24 +2,40 @@ import React, { ChangeEvent, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Navigate, useNavigate } from "react-router-dom";
+import { mutate } from "swr";
 import { authThunk } from "../redux/thunks/auth.thunk";
 import { useUserContext } from "../context/register.context";
 import { RegisterModal } from ".";
-
-type User = {
-  username: string;
-  password: string;
-};
+import { AuthCredentials } from "../interfaces/redux.interface";
+import { useLoginContext } from "../context/login.context";
 
 export const LoginPage: React.FC<{}> = () => {
   const { isAuth } = useAppSelector((state) => state.authReducer);
-  const [user, setUser] = useState<User>({ username: "", password: "" });
+  const [user, setUser] = useState<AuthCredentials>({
+    email: "",
+    password: "",
+  });
   const { setRegister } = useUserContext();
+  const { login, setLogin } = useLoginContext();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   function handleSubmit() {
-    dispatch(authThunk(user));
+    dispatch(authThunk(user))
+      .unwrap()
+      .then((payload) => {
+        if (payload !== undefined) {
+          localStorage.setItem("token", payload?.token);
+          navigate("/dashboard");
+          setUser({ email: "", password: "" });
+          mutate("/user");
+        } else {
+          setLogin(true);
+        }
+      })
+      .catch(() => {
+        navigate("/login");
+      });
     navigate("/dashboard");
   }
 
@@ -37,11 +53,11 @@ export const LoginPage: React.FC<{}> = () => {
     <>
       <form className="container flex flex-column gap-4 w-[50%] mt-[64px]">
         <input
-          name="username"
+          name="email"
           type="email"
           placeholder="Email"
           className="border-2 p-2 rounded-md"
-          value={user.username}
+          value={user.email}
           onChange={handleLogin}
         />
         <input
@@ -71,6 +87,7 @@ export const LoginPage: React.FC<{}> = () => {
           </Button>
         </div>
       </form>
+      {login ? <div>Login Error</div> : null}
       <RegisterModal />
     </>
   );
