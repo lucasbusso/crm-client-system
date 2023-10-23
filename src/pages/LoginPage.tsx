@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, Suspense } from "react";
 import { Button } from "react-bootstrap";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { Navigate, useNavigate } from "react-router-dom";
@@ -8,9 +8,10 @@ import { useUserContext } from "../context/register.context";
 import { RegisterModal } from ".";
 import { AuthCredentials } from "../interfaces/redux.interface";
 import { useLoginContext } from "../context/login.context";
+const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const LoginPage: React.FC<{}> = () => {
-  const { isAuth } = useAppSelector((state) => state.authReducer);
+  const { isAuth, loading } = useAppSelector((state) => state.authReducer);
   const [user, setUser] = useState<AuthCredentials>({
     email: "",
     password: "",
@@ -24,11 +25,11 @@ export const LoginPage: React.FC<{}> = () => {
     dispatch(authThunk(user))
       .unwrap()
       .then((payload) => {
-        if (payload !== undefined) {
+        if (payload?.token && payload?.user) {
           localStorage.setItem("token", payload?.token);
-          navigate("/dashboard");
           setUser({ email: "", password: "" });
           mutate("/user");
+          navigate("/dashboard");
         } else {
           setLogin(true);
         }
@@ -75,7 +76,13 @@ export const LoginPage: React.FC<{}> = () => {
             className="bg-indigo-500 hover:bg-indigo-600 font-bold uppercase"
             onClick={() => handleSubmit()}
           >
-            Login
+            {loading ? (
+              <Suspense>
+                <LoadingSpinner />
+              </Suspense>
+            ) : (
+              "Login"
+            )}
           </Button>
           <Button
             type="button"
@@ -87,6 +94,7 @@ export const LoginPage: React.FC<{}> = () => {
           </Button>
         </div>
       </form>
+
       {login ? <div>Login Error</div> : null}
       <RegisterModal />
     </>

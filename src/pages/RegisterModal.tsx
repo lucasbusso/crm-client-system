@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, Suspense } from "react";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import { useUserContext } from "../context/register.context";
@@ -6,8 +6,10 @@ import { User } from "../interfaces/form.interface";
 import { mutate } from "swr";
 import { useAppDispatch } from "../redux/hooks";
 import { registerThunk } from "../redux/thunks/register.thunk";
+const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const RegisterModal = (): JSX.Element => {
+  const [loading, setLoading] = useState(false);
   const [newUser, setNewUser] = useState<User>({
     name: "",
     password: "",
@@ -27,12 +29,17 @@ export const RegisterModal = (): JSX.Element => {
   }
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setLoading(true);
     e.preventDefault();
     dispatch(registerThunk(newUser))
       .unwrap()
-      .then(() => {
-        setNewUser({ name: "", password: "", email: "", age: "" });
-        mutate("/user");
+      .then((response) => {
+        if (response?.status === 201) {
+          setNewUser({ name: "", password: "", email: "", age: "" });
+          mutate("/user");
+          setRegister(false);
+          setLoading(false);
+        }
       })
       .catch((error) => {
         console.error("Error al registrar el usuario", error);
@@ -98,7 +105,13 @@ export const RegisterModal = (): JSX.Element => {
           className="bg-indigo-500 hover:bg-indigo-600 font-bold  uppercase"
           onClick={(e) => handleSubmit(e)}
         >
-          Register
+          {loading ? (
+            <Suspense>
+              <LoadingSpinner />
+            </Suspense>
+          ) : (
+            "Register"
+          )}
         </Button>
       </form>
     </Modal>
