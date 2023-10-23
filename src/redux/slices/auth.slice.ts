@@ -1,8 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { authThunk } from "../thunks/auth.thunk";
 import { RejectedActionFromAsyncThunk } from "@reduxjs/toolkit/dist/matchers";
-import { expirationTokenAuth, getCookie, tokenDecode } from "../../utils";
-import { TokenFirebase } from "../../interfaces/firebase.interface";
+import {
+  TokenJWT,
+  expirationTokenAuth,
+  getCookie,
+  tokenDecode,
+} from "../../utils";
+import { authThunk } from "../thunks/auth.thunk";
 
 interface AuthState {
   isAuth: boolean;
@@ -12,6 +16,8 @@ interface AuthState {
   userData: {
     email: string | null;
     uid: string | null;
+    name: string | null;
+    role: "user" | "admin" | null;
   } | null;
   accessToken: string | null | undefined;
   isExpired: boolean | null;
@@ -34,8 +40,10 @@ const initialState: AuthState = {
   userData:
     getCookie("accessToken") !== undefined
       ? {
-          email: tokenDecode<TokenFirebase>(getCookie("accessToken")!).email,
-          uid: tokenDecode<TokenFirebase>(getCookie("accessToken")!).sub,
+          email: tokenDecode<TokenJWT>(getCookie("accessToken")!).email,
+          uid: tokenDecode<TokenJWT>(getCookie("accessToken")!)._id,
+          name: tokenDecode<TokenJWT>(getCookie("accessToken")!).name,
+          role: tokenDecode<TokenJWT>(getCookie("accessToken")!).role,
         }
       : null,
 };
@@ -53,23 +61,27 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(authThunk.pending, (state) => {
-      return (state = { ...initialState, loading: true });
+      return { ...state, loading: true, error: null };
     });
     builder.addCase(authThunk.rejected, (state, action) => {
-      return (state = { ...initialState, loading: false, error: action.error });
+      return { ...state, loading: false, error: action.error };
     });
     builder.addCase(authThunk.fulfilled, (state, action) => {
-      return (state = {
-        ...initialState,
+      if (action.payload === undefined) return;
+      const { token, user } = action.payload;
+      return {
+        ...state,
         loading: false,
         success: true,
-        accessToken: action.payload.accessToken,
+        accessToken: token,
         isAuth: true,
         isExpired: false,
-        userData: action.payload.userData,
-      });
+        userData: user,
+      };
     });
   },
 });
 
 export const { login, logout } = authSlice.actions;
+
+export default authSlice.reducer;

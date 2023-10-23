@@ -1,5 +1,12 @@
 import { SetStateAction, Dispatch } from "react";
 
+export type User = {
+  name?: string;
+  email: string;
+  password: string;
+  age?: number | string;
+};
+
 export type Client = {
   name: string | undefined;
   business: string | undefined;
