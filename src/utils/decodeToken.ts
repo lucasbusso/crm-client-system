@@ -1,7 +1,7 @@
 import decode from "jwt-decode";
 import { Settings, DateTime } from "luxon";
 
-interface TokenJWT {
+export interface TokenJWT {
   _id: string;
   email: string;
   name: string;
