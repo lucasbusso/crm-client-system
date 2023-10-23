@@ -1,11 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import {
-  NavigateFunction,
-  useNavigate,
-  Link,
-  Navigate,
-} from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useCookies } from "react-cookie";
 import { NavDropdown } from "react-bootstrap";
@@ -33,7 +28,7 @@ const NavbarComponent = () => {
           ✦ Client Manager ✦
         </h1>
         {isAuth ? (
-          <NavDropdown title={`Hi ${userData?.email}`} className="text-white">
+          <NavDropdown title={`Hi ${userData?.name}`} className="text-white">
             <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
           </NavDropdown>
         ) : (
