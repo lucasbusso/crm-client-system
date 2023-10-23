@@ -1,31 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import * as auth from "firebase/auth";
-import { authFirebase } from "../../config/firebase";
+import { registerService } from "../../services/register.service";
+import { User } from "../../interfaces/form.interface";
 
 export const registerThunk = createAsyncThunk(
-  "firebase/auth",
-  async (
-    { username, password }: { username: string; password: string },
-    { rejectWithValue }
-  ) => {
+  "auth/register",
+  async ({ email, password, name, age }: User, { rejectWithValue }) => {
     try {
-      const registerGenerate = await auth.createUserWithEmailAndPassword(
-        authFirebase,
-        username,
-        password
-      );
-
-      const { email, uid } = registerGenerate.user;
-      const { token: accessToken, expirationTime } =
-        await registerGenerate.user.getIdTokenResult();
-      return {
-        accessToken,
-        expirationTime,
-        userData: {
-          email,
-          uid,
-        },
-      };
+      const response = await registerService({ email, password, name, age });
+      return response;
     } catch (error) {
       return rejectWithValue(error);
     }
