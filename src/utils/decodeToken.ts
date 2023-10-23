@@ -1,6 +1,14 @@
 import decode from "jwt-decode";
 import { Settings, DateTime } from "luxon";
-import { TokenFirebase } from "../interfaces/firebase.interface";
+
+interface TokenJWT {
+  _id: string;
+  email: string;
+  name: string;
+  iat: number;
+  exp: number;
+  role: "user" | "admin";
+}
 
 export const tokenDecode = <T>(token: string): T => {
   const createDecode: T = decode(token);
@@ -11,7 +19,7 @@ export const expirationTokenAuth = (token: string): boolean => {
   Settings.defaultZone = "America/Buenos_Aires";
   Settings.defaultLocale = "es";
 
-  const { exp } = tokenDecode<TokenFirebase>(token);
+  const { exp } = tokenDecode<TokenJWT>(token);
   const now = DateTime.now().toMillis();
 
   return exp * 1000 <= now;
