@@ -4,7 +4,7 @@ import { User } from "../interfaces/form.interface";
 const loginService = async (userData: User) => {
   try {
     const response = await axios.post(
-      `http://localhost:3001/api/auth/login`,
+      `${import.meta.env.VITE_API_URL}/auth/login`,
       userData
     );
     return response;
