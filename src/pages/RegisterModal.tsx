@@ -6,11 +6,11 @@ import { User } from "../interfaces/form.interface";
 import { mutate } from "swr";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { registerThunk } from "../redux/thunks/register.thunk";
+import { ErrorNotification } from "../components";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const RegisterModal = (): JSX.Element => {
   const { loading, error } = useAppSelector((state) => state.registerReducer);
-  console.log(error, loading);
   const [newUser, setNewUser] = useState<User>({
     firstName: "",
     lastName: "",
@@ -60,84 +60,87 @@ export const RegisterModal = (): JSX.Element => {
   }
 
   return (
-    <Modal
-      show={showModal}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      animation
-    >
-      <Modal.Header className="justify-end border-none pb-0">
-        <Button
-          onClick={handleModal}
-          className="text-black text-2xl hover:bg-transparent border-none"
-        >
-          ✕
-        </Button>
-      </Modal.Header>
-      <form className="container flex flex-column gap-4 w-[60%] mt-[12px] mb-[48px]">
-        <div className="flex gap-4">
+    <>
+      <Modal
+        show={showModal}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        animation
+      >
+        <Modal.Header className="justify-end border-none pb-0">
+          <Button
+            onClick={handleModal}
+            className="text-black text-2xl hover:bg-transparent border-none"
+          >
+            ✕
+          </Button>
+        </Modal.Header>
+        <form className="container flex flex-column gap-4 w-[60%] mt-[12px] mb-[48px]">
+          <div className="flex gap-4">
+            <input
+              name="firstName"
+              type="text"
+              placeholder="First name"
+              className="border-2 p-2 rounded-md w-[50%]"
+              value={newUser.firstName}
+              onChange={handleInputChange}
+            />
+            <input
+              name="lastName"
+              type="text"
+              placeholder="Last name"
+              className="border-2 p-2 rounded-md w-[50%]"
+              value={newUser.lastName}
+              onChange={handleInputChange}
+            />
+          </div>
           <input
-            name="firstName"
+            name="ownBusiness"
             type="text"
-            placeholder="First name"
-            className="border-2 p-2 rounded-md w-[50%]"
-            value={newUser.firstName}
+            placeholder="Business name"
+            className="border-2 p-2 rounded-md"
+            value={newUser.ownBusiness}
+            onChange={handleInputChange}
+          />
+          <select className="border-2 p-2 rounded-md">
+            <option>Select your role</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+          </select>
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            className="border-2 p-2 rounded-md"
+            value={newUser.email}
             onChange={handleInputChange}
           />
           <input
-            name="lastName"
-            type="text"
-            placeholder="Last name"
-            className="border-2 p-2 rounded-md w-[50%]"
-            value={newUser.lastName}
+            name="password"
+            type="password"
+            placeholder="Password"
+            className="border-2 p-2 rounded-md"
+            value={newUser.password}
             onChange={handleInputChange}
           />
-        </div>
-        <input
-          name="ownBusiness"
-          type="text"
-          placeholder="Business name"
-          className="border-2 p-2 rounded-md"
-          value={newUser.ownBusiness}
-          onChange={handleInputChange}
-        />
-        <select className="border-2 p-2 rounded-md">
-          <option>Select your role</option>
-          <option value="admin">Admin</option>
-          <option value="user">User</option>
-        </select>
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          className="border-2 p-2 rounded-md"
-          value={newUser.email}
-          onChange={handleInputChange}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          className="border-2 p-2 rounded-md"
-          value={newUser.password}
-          onChange={handleInputChange}
-        />
-        <Button
-          type="submit"
-          variant="primary"
-          className="bg-indigo-500 hover:bg-indigo-600 font-bold  uppercase"
-          onClick={(e) => handleSubmit(e)}
-        >
-          {loading ? (
-            <Suspense>
-              <LoadingSpinner />
-            </Suspense>
-          ) : (
-            "Register"
-          )}
-        </Button>
-      </form>
-    </Modal>
+          <Button
+            type="submit"
+            variant="primary"
+            className="bg-indigo-500 hover:bg-indigo-600 font-bold  uppercase"
+            onClick={(e) => handleSubmit(e)}
+          >
+            {loading ? (
+              <Suspense>
+                <LoadingSpinner />
+              </Suspense>
+            ) : (
+              "Register"
+            )}
+          </Button>
+        </form>
+      </Modal>
+      {error && <ErrorNotification errorMessage={error.code} />}
+    </>
   );
 };

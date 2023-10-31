@@ -24,7 +24,6 @@ const Form: React.FC<object> = (): JSX.Element => {
         setLocalStorageClient(formData);
       })
       .catch((e) => {
-        console.log(e.errors);
         setError(true);
         setErrorMessage(e.errors);
       })

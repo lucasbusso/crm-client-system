@@ -17,7 +17,6 @@ export const registerThunk = createAsyncThunk(
         password,
         role,
       });
-      if (response.data.errors) return response.data.errors;
       return response;
     } catch (error) {
       return rejectWithValue(error);
