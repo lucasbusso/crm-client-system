@@ -7,9 +7,10 @@ const registerService = async (userData: User) => {
       `${import.meta.env.VITE_API_URL}/auth/register`,
       userData
     );
+    return { data: response.data, status: response.status };
+  } catch (error: any) {
+    const { response } = error;
     return response;
-  } catch (error) {
-    console.error("Error fetching data:", error);
   }
 };
 

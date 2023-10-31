@@ -1,15 +1,16 @@
 import axios from "axios";
-import { User } from "../interfaces/form.interface";
+import { AuthCredentials } from "../interfaces/redux.interface";
 
-const loginService = async (userData: User) => {
+const loginService = async (userData: AuthCredentials) => {
   try {
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/auth/login`,
       userData
     );
     return response;
-  } catch (error) {
-    console.error("Error fetching data:", error);
+  } catch (error: any) {
+    const { response } = error;
+    return response;
   }
 };
 

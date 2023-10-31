@@ -4,9 +4,20 @@ import { User } from "../../interfaces/form.interface";
 
 export const registerThunk = createAsyncThunk(
   "auth/register",
-  async ({ email, password, name, age }: User, { rejectWithValue }) => {
+  async (
+    { firstName, lastName, ownBusiness, email, password, role }: User,
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await registerService({ email, password, name, age });
+      const response = await registerService({
+        firstName,
+        lastName,
+        ownBusiness,
+        email,
+        password,
+        role,
+      });
+      if (response.data.errors) return response.data.errors;
       return response;
     } catch (error) {
       return rejectWithValue(error);

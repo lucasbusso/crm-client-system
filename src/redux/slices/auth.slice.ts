@@ -16,7 +16,7 @@ interface AuthState {
   userData: {
     email: string | null;
     uid: string | null;
-    name: string | null;
+    firstName: string | null;
     role: "user" | "admin" | null;
   } | null;
   accessToken: string | null | undefined;
@@ -42,7 +42,7 @@ const initialState: AuthState = {
       ? {
           email: tokenDecode<TokenJWT>(getCookie("accessToken")!).email,
           uid: tokenDecode<TokenJWT>(getCookie("accessToken")!)._id,
-          name: tokenDecode<TokenJWT>(getCookie("accessToken")!).name,
+          firstName: tokenDecode<TokenJWT>(getCookie("accessToken")!).name,
           role: tokenDecode<TokenJWT>(getCookie("accessToken")!).role,
         }
       : null,
@@ -67,17 +67,29 @@ export const authSlice = createSlice({
       return { ...state, loading: false, error: action.error };
     });
     builder.addCase(authThunk.fulfilled, (state, action) => {
-      if (action.payload === undefined) return;
-      const { token, user } = action.payload;
-      return {
-        ...state,
-        loading: false,
-        success: true,
-        accessToken: token,
-        isAuth: true,
-        isExpired: false,
-        userData: user,
-      };
+      if (action.payload.token) {
+        const { token, user } = action.payload;
+        return {
+          ...state,
+          loading: false,
+          success: true,
+          accessToken: token,
+          isAuth: true,
+          isExpired: false,
+          userData: user,
+        };
+      } else {
+        return {
+          ...state,
+          error: action.payload,
+          loading: false,
+          success: false,
+          accessToken: null,
+          isAuth: false,
+          isExpired: false,
+          userData: null,
+        };
+      }
     });
   },
 });

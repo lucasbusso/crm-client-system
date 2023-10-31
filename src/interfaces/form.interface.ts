@@ -1,10 +1,12 @@
 import { SetStateAction, Dispatch } from "react";
 
 export type User = {
-  name?: string;
+  firstName: string;
+  lastName: string;
+  ownBusiness: string;
   email: string;
   password: string;
-  age?: number | string;
+  role: "user" | "admin";
 };
 
 export type Client = {

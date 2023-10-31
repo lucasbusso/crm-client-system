@@ -7,7 +7,7 @@ export const authThunk = createAsyncThunk(
   async ({ email, password }: AuthCredentials, { rejectWithValue }) => {
     try {
       const response = await loginService({ email, password });
-      if (response === undefined) return undefined;
+      if (response.data.error) return response.data.error;
       const { token, user } = await response?.data;
       return { token, user };
     } catch (error) {
