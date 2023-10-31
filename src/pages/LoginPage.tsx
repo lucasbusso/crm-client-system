@@ -8,16 +8,19 @@ import { useUserContext } from "../context/register.context";
 import { RegisterModal } from ".";
 import { AuthCredentials } from "../interfaces/redux.interface";
 import { useLoginContext } from "../context/login.context";
+import { ErrorNotification } from "../components";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const LoginPage: React.FC<{}> = () => {
-  const { isAuth, loading } = useAppSelector((state) => state.authReducer);
+  const { isAuth, loading, error } = useAppSelector(
+    (state) => state.authReducer
+  );
   const [user, setUser] = useState<AuthCredentials>({
     email: "",
     password: "",
   });
   const { setRegister } = useUserContext();
-  const { login, setLogin } = useLoginContext();
+  const { setLogin } = useLoginContext();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -27,9 +30,9 @@ export const LoginPage: React.FC<{}> = () => {
       .then((payload) => {
         if (payload?.token && payload?.user) {
           localStorage.setItem("token", payload?.token);
-          setUser({ email: "", password: "" });
           mutate("/user");
           navigate("/dashboard");
+          setUser({ email: "", password: "" });
         } else {
           setLogin(true);
         }
@@ -94,8 +97,7 @@ export const LoginPage: React.FC<{}> = () => {
           </Button>
         </div>
       </form>
-
-      {login ? <div>Login Error</div> : null}
+      {error && <ErrorNotification errorMessage={error} />}
       <RegisterModal />
     </>
   );

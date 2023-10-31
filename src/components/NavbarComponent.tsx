@@ -28,7 +28,10 @@ const NavbarComponent = () => {
           ✦ Client Manager ✦
         </h1>
         {isAuth ? (
-          <NavDropdown title={`Hi ${userData?.name}`} className="text-white">
+          <NavDropdown
+            title={`Hi ${userData?.firstName}`}
+            className="text-white"
+          >
             <NavDropdown.Item onClick={handleLogout}>Logout</NavDropdown.Item>
           </NavDropdown>
         ) : (

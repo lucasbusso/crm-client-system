@@ -4,17 +4,20 @@ import Modal from "react-bootstrap/Modal";
 import { useUserContext } from "../context/register.context";
 import { User } from "../interfaces/form.interface";
 import { mutate } from "swr";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { registerThunk } from "../redux/thunks/register.thunk";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const RegisterModal = (): JSX.Element => {
-  const [loading, setLoading] = useState(false);
+  const { loading, error } = useAppSelector((state) => state.registerReducer);
+  console.log(error, loading);
   const [newUser, setNewUser] = useState<User>({
-    name: "",
-    password: "",
+    firstName: "",
+    lastName: "",
+    ownBusiness: "",
     email: "",
-    age: "",
+    password: "",
+    role: "admin",
   });
   const { register, setRegister } = useUserContext();
   const dispatch = useAppDispatch();
@@ -29,16 +32,22 @@ export const RegisterModal = (): JSX.Element => {
   }
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setLoading(true);
     e.preventDefault();
     dispatch(registerThunk(newUser))
       .unwrap()
       .then((response) => {
         if (response?.status === 201) {
-          setNewUser({ name: "", password: "", email: "", age: "" });
           mutate("/user");
           setRegister(false);
-          setLoading(false);
+          setNewUser({
+            firstName: "",
+            lastName: "",
+            ownBusiness: "",
+            email: "",
+            password: "",
+            role: "admin",
+          });
+        } else {
         }
       })
       .catch((error) => {
@@ -67,22 +76,37 @@ export const RegisterModal = (): JSX.Element => {
         </Button>
       </Modal.Header>
       <form className="container flex flex-column gap-4 w-[60%] mt-[12px] mb-[48px]">
+        <div className="flex gap-4">
+          <input
+            name="firstName"
+            type="text"
+            placeholder="First name"
+            className="border-2 p-2 rounded-md w-[50%]"
+            value={newUser.firstName}
+            onChange={handleInputChange}
+          />
+          <input
+            name="lastName"
+            type="text"
+            placeholder="Last name"
+            className="border-2 p-2 rounded-md w-[50%]"
+            value={newUser.lastName}
+            onChange={handleInputChange}
+          />
+        </div>
         <input
-          name="name"
+          name="ownBusiness"
           type="text"
-          placeholder="Name"
+          placeholder="Business name"
           className="border-2 p-2 rounded-md"
-          value={newUser.name}
+          value={newUser.ownBusiness}
           onChange={handleInputChange}
         />
-        <input
-          name="age"
-          type="text"
-          placeholder="Age"
-          className="border-2 p-2 rounded-md"
-          value={newUser.age}
-          onChange={handleInputChange}
-        />
+        <select className="border-2 p-2 rounded-md">
+          <option>Select your role</option>
+          <option value="admin">Admin</option>
+          <option value="user">User</option>
+        </select>
         <input
           name="email"
           type="email"
