@@ -9,8 +9,8 @@ const registerService = async (userData: User) => {
     );
     return { data: response.data, status: response.status };
   } catch (error: any) {
-    const { response } = error;
-    return response;
+    const { code } = error;
+    return { code };
   }
 };
 
