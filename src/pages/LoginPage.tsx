@@ -9,22 +9,34 @@ import { RegisterModal } from ".";
 import { AuthCredentials } from "../interfaces/redux.interface";
 import { useLoginContext } from "../context/login.context";
 import { ErrorNotification } from "../components";
+import { useClearErrors } from "../hooks/useClearErrors";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const LoginPage: React.FC<{}> = () => {
-  const { isAuth, loading, error } = useAppSelector(
-    (state) => state.authReducer
-  );
   const [user, setUser] = useState<AuthCredentials>({
     email: "",
     password: "",
   });
+  const { isAuth, loading, error } = useAppSelector(
+    (state) => state.authReducer
+  );
   const { setRegister } = useUserContext();
   const { setLogin } = useLoginContext();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  useClearErrors();
 
-  function handleSubmit() {
+  function handleLogin(e: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  }
+
+  function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
     dispatch(authThunk(user))
       .unwrap()
       .then((payload) => {
@@ -41,14 +53,6 @@ export const LoginPage: React.FC<{}> = () => {
         navigate("/login");
       });
     navigate("/dashboard");
-  }
-
-  function handleLogin(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
   }
 
   return isAuth ? (
@@ -77,7 +81,7 @@ export const LoginPage: React.FC<{}> = () => {
             type="submit"
             variant="primary"
             className="bg-indigo-500 hover:bg-indigo-600 font-bold uppercase"
-            onClick={() => handleSubmit()}
+            onClick={(e) => handleSubmit(e)}
           >
             {loading ? (
               <Suspense>

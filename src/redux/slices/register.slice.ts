@@ -20,6 +20,9 @@ export const registerSlice = createSlice({
     register: (state) => {
       state.success = true;
     },
+    clearRegisterError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(registerThunk.pending, (state) => {
@@ -32,6 +35,7 @@ export const registerSlice = createSlice({
       if (action.payload.data) {
         return {
           ...state,
+          error: null,
           loading: false,
           success: true,
         };
@@ -46,6 +50,6 @@ export const registerSlice = createSlice({
     });
   },
 });
-export const { register } = registerSlice.actions;
+export const { register, clearRegisterError } = registerSlice.actions;
 
 export default registerSlice.reducer;

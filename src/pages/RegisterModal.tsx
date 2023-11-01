@@ -7,6 +7,7 @@ import { mutate } from "swr";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { registerThunk } from "../redux/thunks/register.thunk";
 import { ErrorNotification } from "../components";
+import { useClearErrors } from "../hooks/useClearErrors";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const RegisterModal = (): JSX.Element => {
@@ -22,6 +23,7 @@ export const RegisterModal = (): JSX.Element => {
   const { register, setRegister } = useUserContext();
   const dispatch = useAppDispatch();
   const showModal = register;
+  useClearErrors();
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;

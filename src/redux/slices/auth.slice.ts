@@ -58,6 +58,9 @@ export const authSlice = createSlice({
     logout: (state) => {
       state.isAuth = false;
     },
+    clearAuthError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(authThunk.pending, (state) => {
@@ -71,6 +74,7 @@ export const authSlice = createSlice({
         const { token, user } = action.payload;
         return {
           ...state,
+          error: null,
           loading: false,
           success: true,
           accessToken: token,
@@ -94,6 +98,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, clearAuthError } = authSlice.actions;
 
 export default authSlice.reducer;
