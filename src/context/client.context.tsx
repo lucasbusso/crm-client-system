@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Client, ClientProps } from "../interfaces/form.interface";
 import { getClients } from "../services/clients/getClients";
-import { getCookie } from "../utils";
+import { formatDate, getCookie } from "../utils";
 import { useAppSelector } from "../redux/hooks";
 
 const ClientContext = createContext<ClientProps | null>(null);
@@ -35,7 +35,11 @@ export const ClientProvider: React.FC<{
       try {
         const response = await getClients();
         const { data } = response;
-        setClients(data.data);
+        const formattedClients = data.data.map((client) => ({
+          ...client,
+          updatedAt: `last update: ${formatDate(client.updatedAt)}`,
+        }));
+        setClients(formattedClients);
         setLoading(false);
       } catch (error) {
         console.log(error);
