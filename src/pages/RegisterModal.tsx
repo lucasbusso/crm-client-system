@@ -6,8 +6,9 @@ import { User } from "../interfaces/form.interface";
 import { mutate } from "swr";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { registerThunk } from "../redux/thunks/register.thunk";
-import { ErrorNotification } from "../components";
+import { Notification } from "../components";
 import { useClearErrors } from "../hooks/useClearErrors";
+import { useNotificationContext } from "../context/notification.context";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const RegisterModal = (): JSX.Element => {
@@ -21,6 +22,7 @@ export const RegisterModal = (): JSX.Element => {
     role: "admin",
   });
   const { register, setRegister } = useUserContext();
+  const { setStatusColor, statusColor } = useNotificationContext();
   const dispatch = useAppDispatch();
   const showModal = register;
   useClearErrors();
@@ -39,6 +41,7 @@ export const RegisterModal = (): JSX.Element => {
       .unwrap()
       .then((response) => {
         if (response?.status === 201) {
+          setStatusColor("success");
           mutate("/user");
           setRegister(false);
           setNewUser({
@@ -49,11 +52,11 @@ export const RegisterModal = (): JSX.Element => {
             password: "",
             role: "admin",
           });
-        } else {
         }
       })
       .catch((error) => {
         console.error("Error al registrar el usuario", error);
+        setStatusColor("danger");
       });
   };
 
@@ -142,7 +145,7 @@ export const RegisterModal = (): JSX.Element => {
           </Button>
         </form>
       </Modal>
-      {error && <ErrorNotification errorMessage={error.code} />}
+      {error && <Notification message={error.code} statusColor={statusColor} />}
     </>
   );
 };

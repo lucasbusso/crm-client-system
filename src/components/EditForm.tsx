@@ -1,7 +1,7 @@
 import { ChangeEvent, useState, useEffect } from "react";
 import { useClientContext } from "../context/client.context";
 import { ClientEdit } from "../interfaces/form.interface";
-import { useForm } from "../hooks";
+import { useCreateForm } from "../hooks";
 
 const EditForm = (): JSX.Element => {
   const { clients, setClientId, clientId, updateClient, emptyClient } =
@@ -10,7 +10,7 @@ const EditForm = (): JSX.Element => {
     emptyClient
   );
 
-  const { generateDate } = useForm(emptyClient);
+  const { generateDate } = useCreateForm(emptyClient);
 
   useEffect(() => {
     const clientToEdit = clients.find((client) => client.id === clientId);

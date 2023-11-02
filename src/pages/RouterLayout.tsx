@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { NavbarComponent } from "../components";
-import { Navigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 
 export const RouterLayout: React.FC<{}> = () => {

@@ -29,7 +29,7 @@ const initialState: AuthState = {
       ? !expirationTokenAuth(getCookie("accessToken")!)
       : false,
   accessToken:
-    getCookie("accessToken") !== undefined ? getCookie("accessToken") : null,
+    getCookie("accessToken") !== undefined ? getCookie("accessToken=") : null,
   error: null,
   isExpired:
     getCookie("accessToken") !== undefined

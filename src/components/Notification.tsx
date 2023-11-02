@@ -1,35 +1,32 @@
 import React, { useState } from "react";
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
-import { NotificationProps } from "../interfaces/form.interface";
 
-const Notification: React.FC<NotificationProps> = ({
-  errorMessage,
-  error,
+interface ToastProps {
+  message: any;
+  statusColor?: "danger" | "success";
+}
+
+const Notification: React.FC<ToastProps> = ({
+  message,
+  statusColor = "danger",
 }): JSX.Element => {
-  const [close, setClose] = useState(error);
-
+  const [show, setShow] = useState(true);
   return (
-    <ToastContainer position="bottom-start" className="w-full">
+    <ToastContainer
+      position="bottom-center"
+      className="text-center text-white opacity-80 mx-auto w-[500px] mb-4"
+    >
       <Toast
-        onClose={() => setClose(false)}
-        show={close}
         delay={3000}
         autohide
+        onClose={() => setShow(false)}
+        show={show}
         animation
-        bg="danger"
+        bg={statusColor}
         className="w-full"
       >
-        <Toast.Header>
-          <strong className="me-auto">Fix the following fields:</strong>
-        </Toast.Header>
-        <Toast.Body>
-          {errorMessage.map((error) => (
-            <li key={error} className="text-white text-lg">
-              {error}
-            </li>
-          ))}
-        </Toast.Body>
+        <Toast.Body>{message}</Toast.Body>
       </Toast>
     </ToastContainer>
   );

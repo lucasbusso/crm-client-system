@@ -8,8 +8,9 @@ import { useUserContext } from "../context/register.context";
 import { RegisterModal } from ".";
 import { AuthCredentials } from "../interfaces/redux.interface";
 import { useLoginContext } from "../context/login.context";
-import { ErrorNotification } from "../components";
+import { Notification } from "../components";
 import { useClearErrors } from "../hooks/useClearErrors";
+import { useNotificationContext } from "../context/notification.context";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const LoginPage: React.FC<{}> = () => {
@@ -20,13 +21,14 @@ export const LoginPage: React.FC<{}> = () => {
   const { isAuth, loading, error } = useAppSelector(
     (state) => state.authReducer
   );
+  const { setStatusColor, statusColor } = useNotificationContext();
   const { setRegister } = useUserContext();
   const { setLogin } = useLoginContext();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   useClearErrors();
 
-  function handleLogin(e: ChangeEvent<HTMLInputElement>) {
+  function handleInputLogin(e: ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
     setUser((prevUser) => ({
       ...prevUser,
@@ -34,19 +36,20 @@ export const LoginPage: React.FC<{}> = () => {
     }));
   }
 
-  function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleLoginSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
     dispatch(authThunk(user))
       .unwrap()
       .then((payload) => {
         if (payload?.token && payload?.user) {
-          localStorage.setItem("token", payload?.token);
           mutate("/user");
           navigate("/dashboard");
+          setStatusColor("success");
           setUser({ email: "", password: "" });
         } else {
           setLogin(true);
+          setStatusColor("danger");
         }
       })
       .catch(() => {
@@ -66,7 +69,7 @@ export const LoginPage: React.FC<{}> = () => {
           placeholder="Email"
           className="border-2 p-2 rounded-md"
           value={user.email}
-          onChange={handleLogin}
+          onChange={handleInputLogin}
         />
         <input
           name="password"
@@ -74,14 +77,14 @@ export const LoginPage: React.FC<{}> = () => {
           placeholder="Password"
           className="border-2 p-2 rounded-md"
           value={user.password}
-          onChange={handleLogin}
+          onChange={handleInputLogin}
         />
         <div className="flex flex-col gap-2">
           <Button
             type="submit"
             variant="primary"
-            className="bg-indigo-500 hover:bg-indigo-600 font-bold uppercase"
-            onClick={(e) => handleSubmit(e)}
+            className="bg-indigo-500 hover:bg-indigo-600 font-bold uppercase h-[50px]"
+            onClick={(e) => handleLoginSubmit(e)}
           >
             {loading ? (
               <Suspense>
@@ -94,14 +97,14 @@ export const LoginPage: React.FC<{}> = () => {
           <Button
             type="button"
             variant="primery-outline"
-            className=" hover:bg-slate-300 text-slate-500 font-bold uppercase"
+            className=" hover:bg-slate-300 text-slate-500 font-bold uppercase h-[50px]"
             onClick={() => setRegister(true)}
           >
             Register
           </Button>
         </div>
       </form>
-      {error && <ErrorNotification errorMessage={error} />}
+      {error && <Notification message={error} statusColor={statusColor} />}
       <RegisterModal />
     </>
   );
