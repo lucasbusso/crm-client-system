@@ -1,68 +1,21 @@
-import React, { ChangeEvent, useState, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
-import { useUserContext } from "../context/register.context";
-import { User } from "../interfaces/form.interface";
-import { mutate } from "swr";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { registerThunk } from "../redux/thunks/register.thunk";
-import { Notification } from ".";
+import { useAppSelector } from "../redux/hooks";
 import { useClearErrors } from "../hooks/useClearErrors";
-import { useNotificationContext } from "../context/notification.context";
+import { useRegister } from "../hooks";
 const LoadingSpinner = React.lazy(() => import("./Spinner"));
 
 const RegisterModal = (): JSX.Element => {
-  const { loading, error } = useAppSelector((state) => state.registerReducer);
-  const [newUser, setNewUser] = useState<User>({
-    firstName: "",
-    lastName: "",
-    ownBusiness: "",
-    email: "",
-    password: "",
-    role: "admin",
-  });
-  const { register, setRegister } = useUserContext();
-  const { setStatusColor, statusColor } = useNotificationContext();
-  const dispatch = useAppDispatch();
-  const showModal = register;
+  const {
+    handleInputRegister,
+    handleSubmitRegister,
+    showModal,
+    newUser,
+    handleModal,
+  } = useRegister();
+  const { loading } = useAppSelector((state) => state.registerReducer);
   useClearErrors();
-
-  function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setNewUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
-  }
-
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    dispatch(registerThunk(newUser))
-      .unwrap()
-      .then((response) => {
-        if (response?.status === 201) {
-          setStatusColor("success");
-          mutate("/user");
-          setRegister(false);
-          setNewUser({
-            firstName: "",
-            lastName: "",
-            ownBusiness: "",
-            email: "",
-            password: "",
-            role: "admin",
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Error al registrar el usuario", error);
-        setStatusColor("danger");
-      });
-  };
-
-  function handleModal() {
-    setRegister(false);
-  }
 
   return (
     <>
@@ -89,7 +42,7 @@ const RegisterModal = (): JSX.Element => {
               placeholder="First name"
               className="border-2 p-2 rounded-md w-[50%]"
               value={newUser.firstName}
-              onChange={handleInputChange}
+              onChange={handleInputRegister}
             />
             <input
               name="lastName"
@@ -97,7 +50,7 @@ const RegisterModal = (): JSX.Element => {
               placeholder="Last name"
               className="border-2 p-2 rounded-md w-[50%]"
               value={newUser.lastName}
-              onChange={handleInputChange}
+              onChange={handleInputRegister}
             />
           </div>
           <input
@@ -106,7 +59,7 @@ const RegisterModal = (): JSX.Element => {
             placeholder="Business name"
             className="border-2 p-2 rounded-md"
             value={newUser.ownBusiness}
-            onChange={handleInputChange}
+            onChange={handleInputRegister}
           />
           <select className="border-2 p-2 rounded-md">
             <option>Select your role</option>
@@ -119,7 +72,7 @@ const RegisterModal = (): JSX.Element => {
             placeholder="Email"
             className="border-2 p-2 rounded-md"
             value={newUser.email}
-            onChange={handleInputChange}
+            onChange={handleInputRegister}
           />
           <input
             name="password"
@@ -127,13 +80,13 @@ const RegisterModal = (): JSX.Element => {
             placeholder="Password"
             className="border-2 p-2 rounded-md"
             value={newUser.password}
-            onChange={handleInputChange}
+            onChange={handleInputRegister}
           />
           <Button
             type="submit"
             variant="primary"
             className="bg-indigo-500 hover:bg-indigo-600 font-bold  uppercase"
-            onClick={(e) => handleSubmit(e)}
+            onClick={(e) => handleSubmitRegister(e)}
           >
             {loading ? (
               <Suspense>
@@ -145,7 +98,6 @@ const RegisterModal = (): JSX.Element => {
           </Button>
         </form>
       </Modal>
-      {error && <Notification message={error.code} statusColor={statusColor} />}
     </>
   );
 };

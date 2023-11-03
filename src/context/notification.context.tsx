@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { NotificationProps } from "../interfaces/form.interface";
 
 const NotificationContext = createContext<NotificationProps | null>(null);
@@ -10,6 +10,16 @@ export const NotificationProvider: React.FC<{
   const [statusColor, setStatusColor] = useState<"danger" | "success">(
     "danger"
   );
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setMessage(undefined);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [message]);
 
   const value: NotificationProps = {
     message,

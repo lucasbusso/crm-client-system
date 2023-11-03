@@ -3,5 +3,7 @@
 @tailwind utilities;
 
 body {
-  background-color: aliceblue;
+  background-image: url("../public/macos-big-sur-apple-layers-fluidic-colorful-wwdc-stock-4096x2304-1455.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }

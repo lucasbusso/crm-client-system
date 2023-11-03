@@ -14,8 +14,8 @@ const Notification: React.FC<ToastProps> = ({
   const [show, setShow] = useState(true);
   return (
     <ToastContainer
-      position="bottom-center"
-      className="text-center text-white opacity-80 mx-auto w-[500px] mb-4"
+      position="top-center"
+      className="text-center text-white opacity-80 mx-auto w-[500px] mt-3"
     >
       <Toast
         delay={3000}

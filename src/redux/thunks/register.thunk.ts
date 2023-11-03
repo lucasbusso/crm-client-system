@@ -1,11 +1,18 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { registerService } from "../../services/register.service";
-import { User } from "../../interfaces/form.interface";
+import { RegistrationData } from "../../interfaces/redux.interface";
 
 export const registerThunk = createAsyncThunk(
   "auth/register",
   async (
-    { firstName, lastName, ownBusiness, email, password, role }: User,
+    {
+      firstName,
+      lastName,
+      ownBusiness,
+      email,
+      password,
+      role,
+    }: RegistrationData,
     { rejectWithValue }
   ) => {
     try {
