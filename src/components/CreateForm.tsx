@@ -3,7 +3,7 @@ import { useCreateForm } from "../hooks";
 import { useClientContext } from "../context/client.context";
 import { Notification } from ".";
 import { useNotificationContext } from "../context/notification.context";
-import { Button, Form } from "react-bootstrap";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 const CreateForm: React.FC<object> = (): JSX.Element => {
@@ -21,86 +21,71 @@ const CreateForm: React.FC<object> = (): JSX.Element => {
       >
         <div className="flex gap-4">
           <div className="block mb-6 w-[50%]">
-            <label
-              htmlFor="firstName"
-              className="uppercase font-bold text-slate-600"
-            >
-              First name
-            </label>
-            <input
-              name="firstName"
-              type="text"
-              className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-              value={formData.firstName}
-              onChange={handleInputCreate}
-            />
+            <FloatingLabel controlId="firstName" label="First name">
+              <Form.Control
+                type="text"
+                placeholder="Enter first name"
+                value={formData.firstName}
+                onChange={(e) => handleInputCreate(e)}
+                name="firstName"
+              />
+            </FloatingLabel>
           </div>
           <div className="block mb-6 w-[50%]  ">
-            <label
-              htmlFor="lastName"
-              className="uppercase font-bold text-slate-600"
-            >
-              Last name
-            </label>
-            <input
-              name="lastName"
-              type="text"
-              className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-              value={formData.lastName}
-              onChange={handleInputCreate}
-            />
+            <FloatingLabel controlId="lastName" label="Last name">
+              <Form.Control
+                type="text"
+                placeholder="Enter last name"
+                value={formData.lastName}
+                onChange={(e) => handleInputCreate(e)}
+                name="lastName"
+              />
+            </FloatingLabel>
           </div>
         </div>
         <div className="block mb-6">
-          <label
-            htmlFor="businessName"
-            className="uppercase font-bold text-slate-600"
-          >
-            Business Name
-          </label>
-          <input
-            name="businessName"
-            type="text"
-            className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-            value={formData.businessName}
-            onChange={handleInputCreate}
-          />
+          <FloatingLabel controlId="businessName" label="Business Name">
+            <Form.Control
+              type="text"
+              placeholder="Enter business name"
+              value={formData.businessName}
+              onChange={(e) => handleInputCreate(e)}
+              name="businessName"
+            />
+          </FloatingLabel>
         </div>
         <div className="block mb-6">
-          <label htmlFor="email" className="uppercase font-bold text-slate-600">
-            Email
-          </label>
-          <input
-            name="email"
-            type="email"
-            className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-            value={formData.email}
-            onChange={handleInputCreate}
-          />
+          <FloatingLabel controlId="email" label="Email">
+            <Form.Control
+              type="email"
+              placeholder="Enter email"
+              value={formData.email}
+              onChange={(e) => handleInputCreate(e)}
+              name="email"
+            />
+          </FloatingLabel>
         </div>
         <div className="block mb-6">
-          <label htmlFor="phone" className="uppercase font-bold text-slate-600">
-            Phone
-          </label>
-          <input
-            name="phone"
-            type="text"
-            className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-            value={formData.phone}
-            onChange={handleInputCreate}
-          />
+          <FloatingLabel controlId="phone" label="Phone">
+            <Form.Control
+              type="text"
+              placeholder="Enter phone number"
+              value={formData.phone}
+              onChange={(e) => handleInputCreate(e)}
+              name="phone"
+            />
+          </FloatingLabel>
         </div>
         <div className="block mb-6">
-          <label htmlFor="date" className="uppercase font-bold text-slate-600">
-            Debt
-          </label>
-          <input
-            name="debt"
-            type="text"
-            className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-            value={formData.debt}
-            onChange={handleInputCreate}
-          />
+          <FloatingLabel controlId="debt" label="Debt">
+            <Form.Control
+              type="text"
+              placeholder="Enter debt"
+              value={formData.debt}
+              onChange={(e) => handleInputCreate(e)}
+              name="debt"
+            />
+          </FloatingLabel>
         </div>
         <div className="block mb-6">
           <Form.Select
@@ -115,7 +100,7 @@ const CreateForm: React.FC<object> = (): JSX.Element => {
 
         <Button
           type="submit"
-          variant="primery"
+          variant="primary"
           className="bg-indigo-500 hover:bg-indigo-600 font-bold uppercase w-full h-[50px] text-slate-100 hover:text-slate-100"
         >
           {loading ? (
