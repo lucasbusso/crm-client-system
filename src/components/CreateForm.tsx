@@ -1,22 +1,19 @@
 import React, { Suspense } from "react";
-import { useCreateForm } from "../hooks";
+import { useCreateClient } from "../hooks";
 import { useClientContext } from "../context/client.context";
-import { Notification } from ".";
-import { useNotificationContext } from "../context/notification.context";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 const CreateForm: React.FC<object> = (): JSX.Element => {
-  const { message, statusColor } = useNotificationContext();
   const { emptyClient, loading } = useClientContext();
   const { formData, handleSubmitCreate, handleInputCreate } =
-    useCreateForm(emptyClient);
+    useCreateClient(emptyClient);
 
   return (
     <div className="md:w-1/2 w-full relative">
       <h2 className="font-bold text-2xl my-6 text-center">Add new client</h2>
       <form
-        className="bg-white shadow-sm rounded-md py-10 px-5 mb-12"
+        className="bg-white shadow-sm rounded-md opacity-95 py-10 px-5"
         onSubmit={(e) => handleSubmitCreate(e)}
       >
         <div className="flex gap-4">
@@ -112,7 +109,6 @@ const CreateForm: React.FC<object> = (): JSX.Element => {
           )}
         </Button>
       </form>
-      {message && <Notification message={message} statusColor={statusColor} />}
     </div>
   );
 };

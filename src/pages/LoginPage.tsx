@@ -1,62 +1,19 @@
-import React, { ChangeEvent, useState, Suspense } from "react";
+import React, { Suspense } from "react";
 import { Button } from "react-bootstrap";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { Navigate, useNavigate } from "react-router-dom";
-import { mutate } from "swr";
-import { authThunk } from "../redux/thunks/auth.thunk";
-import { useUserContext } from "../context/register.context";
+import { useAppSelector } from "../redux/hooks";
+import { Navigate } from "react-router-dom";
 import { RegisterModal } from "../components";
-import { AuthCredentials } from "../interfaces/redux.interface";
-import { useLoginContext } from "../context/login.context";
-import { Notification } from "../components";
 import { useClearErrors } from "../hooks/useClearErrors";
-import { useNotificationContext } from "../context/notification.context";
+import { useLogin } from "../hooks";
+import { useUserContext } from "../context/register.context";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const LoginPage: React.FC<{}> = () => {
-  const [user, setUser] = useState<AuthCredentials>({
-    email: "",
-    password: "",
-  });
-  const { isAuth, loading, error } = useAppSelector(
-    (state) => state.authReducer
-  );
-  const { setStatusColor, statusColor } = useNotificationContext();
+  const { isAuth, loading } = useAppSelector((state) => state.authReducer);
+  const { handleInputLogin, handleLoginSubmit, user } = useLogin();
   const { setRegister } = useUserContext();
-  const { setLogin } = useLoginContext();
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+
   useClearErrors();
-
-  function handleInputLogin(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
-  }
-
-  function handleLoginSubmit(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
-
-    dispatch(authThunk(user))
-      .unwrap()
-      .then((payload) => {
-        if (payload?.token && payload?.user) {
-          mutate("/user");
-          navigate("/dashboard");
-          setStatusColor("success");
-          setUser({ email: "", password: "" });
-        } else {
-          setLogin(true);
-          setStatusColor("danger");
-        }
-      })
-      .catch(() => {
-        navigate("/login");
-      });
-    navigate("/dashboard");
-  }
 
   return isAuth ? (
     <Navigate to="/dashboard" replace />
@@ -104,7 +61,6 @@ export const LoginPage: React.FC<{}> = () => {
           </Button>
         </div>
       </form>
-      {error && <Notification message={error} statusColor={statusColor} />}
       <RegisterModal />
     </>
   );

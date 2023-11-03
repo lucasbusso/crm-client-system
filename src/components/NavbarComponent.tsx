@@ -19,8 +19,11 @@ const NavbarComponent = () => {
   }
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-      <Container className="bg-indigo-500 h-[64px] w-full flex justify-between">
+    <Navbar
+      expand="lg"
+      className="bg-body-tertiary py-0 mt-2 rounded-md shadow-sm"
+    >
+      <Container className="bg-indigo-500 h-[64px] w-full flex justify-between rounded-md">
         <h1
           className="font-bold text-white text-center text-3xl cursor-pointer"
           onClick={() => navigate("/")}

@@ -1,7 +1,7 @@
 import axios from "axios";
-import { User } from "../interfaces/form.interface";
+import { RegistrationData } from "../interfaces/redux.interface";
 
-const registerService = async (userData: User) => {
+const registerService = async (userData: RegistrationData) => {
   try {
     const response = await axios.post(
       `${import.meta.env.VITE_API_URL}/auth/register`,

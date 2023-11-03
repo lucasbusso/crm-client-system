@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { NavbarComponent } from "../components";
+import { NavbarComponent, Notification } from "../components";
 import { Outlet } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { getCookie } from "../utils";
+import { useNotificationContext } from "../context/notification.context";
 
 export const RouterLayout: React.FC<{}> = () => {
   const [, setCookie, remove] = useCookies();
@@ -11,6 +12,7 @@ export const RouterLayout: React.FC<{}> = () => {
     (state) => state.authReducer
   );
   const isTokenStored = getCookie("accessToken");
+  const { message, statusColor } = useNotificationContext();
 
   useEffect(() => {
     if (accessToken && !isTokenStored) {
@@ -28,6 +30,7 @@ export const RouterLayout: React.FC<{}> = () => {
     <div className="h-[100vh]">
       <NavbarComponent />
       <Outlet />
+      {message && <Notification message={message} statusColor={statusColor} />}
     </div>
   );
 };

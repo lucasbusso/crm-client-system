@@ -7,12 +7,8 @@ const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 const Client = () => {
   const { clients, loading } = useClientContext();
 
-  // async function handleSubmitDelete(e: React.FormEvent<HTMLFormElement>) {
-
-  // }
-
   return (
-    <div className="md:max-h-[100%] md:h-[660px] md:overflow-y-scroll">
+    <div className="md:max-h-[100%] md:h-[610px] md:overflow-y-scroll rounded-md">
       {loading ? (
         <div className="w-full h-full grid place-content-center">
           <Suspense>
@@ -22,7 +18,7 @@ const Client = () => {
       ) : clients && clients.length > 0 ? (
         clients.map((client) => (
           <div
-            className="mr-3 mb-3 bg-white shadow-md rounded-md px-5 py-10 "
+            className="mr-3 mb-3 bg-white shadow-sm rounded-md opacity-95 px-5 py-10 "
             key={client._id}
             data-clientid={client._id}
           >

@@ -1,11 +1,29 @@
-import { useState, ChangeEvent } from "react";
+import {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { v4 as uuidv4 } from "uuid";
-import { FormHooks, Client } from "../interfaces/form.interface";
+import { Client } from "../interfaces/form.interface";
 import { useClientContext } from "../context/client.context";
 import { useNotificationContext } from "../context/notification.context";
 import { createClientService } from "../services/clients/createClient";
 
-function useCreateForm(initialValues: Client): FormHooks {
+type createClientHook = {
+  formData: Client;
+  setFormData: Dispatch<SetStateAction<Client>>;
+  resetForm: () => void;
+  generateUniqueId: () => string;
+  generateDate: () => string;
+  handleSubmitCreate: (e: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleInputCreate: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+};
+
+function useCreateClient(initialValues: Client): createClientHook {
   const [formData, setFormData] = useState<Client>(initialValues);
   const { setLoading, setClients } = useClientContext();
   const { setMessage, setStatusColor } = useNotificationContext();
@@ -31,7 +49,7 @@ function useCreateForm(initialValues: Client): FormHooks {
   async function handleSubmitCreate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
+    setMessage(undefined);
     try {
       const response = await createClientService(formData);
       if (response.code) {
@@ -77,4 +95,4 @@ function useCreateForm(initialValues: Client): FormHooks {
   };
 }
 
-export default useCreateForm;
+export default useCreateClient;

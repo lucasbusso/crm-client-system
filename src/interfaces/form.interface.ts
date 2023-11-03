@@ -1,4 +1,4 @@
-import { SetStateAction, Dispatch, FormEvent, ChangeEvent } from "react";
+import { SetStateAction, Dispatch } from "react";
 
 export type User = {
   firstName: string;
@@ -33,21 +33,9 @@ export type ClientEdit = {
   modifiedDate: string;
 };
 
-export interface FormHooks {
-  formData: Client;
-  setFormData: Dispatch<SetStateAction<Client>>;
-  resetForm: () => void;
-  generateUniqueId: () => string;
-  generateDate: () => string;
-  handleSubmitCreate: (e: FormEvent<HTMLFormElement>) => Promise<void>;
-  handleInputCreate: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
-}
-
 export type NotificationProps = {
   message: string | undefined;
-  setMessage: (message: string) => void;
+  setMessage: (message: string | undefined) => void;
   statusColor: "danger" | "success";
   setStatusColor: Dispatch<SetStateAction<"danger" | "success">>;
 };
