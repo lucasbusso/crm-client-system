@@ -38,6 +38,7 @@ export const ClientProvider: React.FC<{
         const formattedClients = data.data.map((client) => ({
           ...client,
           updatedAt: `last update: ${formatDate(client.updatedAt)}`,
+          createdAt: `${formatDate(client.createdAt)}`,
         }));
         setClients(formattedClients);
         setLoading(false);

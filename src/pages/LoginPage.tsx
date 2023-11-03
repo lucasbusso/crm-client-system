@@ -5,7 +5,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { mutate } from "swr";
 import { authThunk } from "../redux/thunks/auth.thunk";
 import { useUserContext } from "../context/register.context";
-import { RegisterModal } from ".";
+import { RegisterModal } from "../components";
 import { AuthCredentials } from "../interfaces/redux.interface";
 import { useLoginContext } from "../context/login.context";
 import { Notification } from "../components";
@@ -62,7 +62,7 @@ export const LoginPage: React.FC<{}> = () => {
     <Navigate to="/dashboard" replace />
   ) : (
     <>
-      <form className="container flex flex-column gap-4 w-[50%] mt-[64px]">
+      <form className="container flex flex-column justify-center gap-4 w-[50%] h-full">
         <input
           name="email"
           type="email"

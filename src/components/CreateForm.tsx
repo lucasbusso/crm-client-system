@@ -3,10 +3,10 @@ import { useCreateForm } from "../hooks";
 import { useClientContext } from "../context/client.context";
 import { Notification } from ".";
 import { useNotificationContext } from "../context/notification.context";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
-const Form: React.FC<object> = (): JSX.Element => {
+const CreateForm: React.FC<object> = (): JSX.Element => {
   const { message, statusColor } = useNotificationContext();
   const { emptyClient, loading } = useClientContext();
   const { formData, handleSubmitCreate, handleInputCreate } =
@@ -103,11 +103,14 @@ const Form: React.FC<object> = (): JSX.Element => {
           />
         </div>
         <div className="block mb-6">
-          <select name="type" className="border-2 p-2 rounded-md w-full">
-            <option>Select a type</option>
+          <Form.Select
+            aria-label="Select a type"
+            name="type"
+            className="border-2 p-2 rounded-md w-full"
+          >
             <option value="cliente">Cliente</option>
             <option value="proveedor">Proveedor</option>
-          </select>
+          </Form.Select>
         </div>
 
         <Button
@@ -129,4 +132,4 @@ const Form: React.FC<object> = (): JSX.Element => {
   );
 };
 
-export default Form;
+export default CreateForm;

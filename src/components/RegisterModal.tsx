@@ -6,12 +6,12 @@ import { User } from "../interfaces/form.interface";
 import { mutate } from "swr";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { registerThunk } from "../redux/thunks/register.thunk";
-import { Notification } from "../components";
+import { Notification } from ".";
 import { useClearErrors } from "../hooks/useClearErrors";
 import { useNotificationContext } from "../context/notification.context";
-const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
+const LoadingSpinner = React.lazy(() => import("./Spinner"));
 
-export const RegisterModal = (): JSX.Element => {
+const RegisterModal = (): JSX.Element => {
   const { loading, error } = useAppSelector((state) => state.registerReducer);
   const [newUser, setNewUser] = useState<User>({
     firstName: "",
@@ -149,3 +149,5 @@ export const RegisterModal = (): JSX.Element => {
     </>
   );
 };
+
+export default RegisterModal;

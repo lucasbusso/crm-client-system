@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { useClientContext } from "../context/client.context";
 import ModalComponent from "./Modal";
+import { Link } from "react-router-dom";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 const Client = () => {
@@ -25,50 +26,52 @@ const Client = () => {
             key={client._id}
             data-clientid={client._id}
           >
-            <p className="uppercase font-bold text-slate-600 my-3">
-              First Name:{" "}
-              <span className="font-normal normal-case">
-                {client.firstName}
-              </span>
-            </p>
-            <p className="uppercase font-bold text-slate-600 my-3">
-              Last Name:{" "}
-              <span className="font-normal normal-case">{client.lastName}</span>
-            </p>
-            <p className="uppercase font-bold text-slate-600 my-3">
-              Client email:{" "}
-              <span className="font-normal normal-case">{client.email}</span>
-            </p>
-
-            <p className="uppercase font-bold text-slate-600 my-3">
+            <div className="flex gap-10">
+              <p className="uppercase font-bold text-slate-600 py-2">
+                First Name:{" "}
+                <span className="font-normal normal-case">
+                  {client.firstName}
+                </span>
+              </p>
+              <p className="uppercase font-bold text-slate-600 py-2">
+                Last Name:{" "}
+                <span className="font-normal normal-case">
+                  {client.lastName}
+                </span>
+              </p>
+            </div>
+            <div className="flex gap-10">
+              <p className="uppercase font-bold text-slate-600 py-2">
+                Email:{" "}
+                <span className="font-normal normal-case">{client.email}</span>
+              </p>
+              <p className="uppercase font-bold text-slate-600 py-2">
+                Phone:{" "}
+                <span className="font-normal normal-case">{client.phone}</span>
+              </p>
+            </div>
+            <p className="uppercase font-bold text-slate-600 py-2">
               Business name:{" "}
               <span className="font-normal normal-case">
                 {client.businessName}
               </span>
             </p>
-
-            <p className="uppercase font-bold text-slate-600 my-3">
+            <p className="uppercase font-bold text-slate-600 py-2">
               Client since:{" "}
               <span className="font-normal normal-case">
-                {client.antiquity}
+                {client.createdAt}
               </span>
             </p>
-
-            <p className="uppercase font-bold text-slate-600 my-3">
+            <p className="uppercase font-bold text-slate-600 py-2">
               Debt:{" "}
               <span className="font-normal normal-case">{client.debt}</span>
             </p>
-            <div className="flex justify-start gap-[24px]">
-              <button
-                type="button"
-                className="py-2 px-5 bg-indigo-600 hover:bg-indigo-700 text-white uppercase font-bold rounded"
-              >
-                Edit
-              </button>
-            </div>
             <ModalComponent />
-            <div className="pt-4 text-sm text-slate-400 flex justify-end">
-              {client.updatedAt}
+            <div className="flex justify-between mt-3">
+              <Link className="font-semibold" to={`/dashboard/${client._id}`}>
+                View details
+              </Link>
+              <p className="text-sm text-slate-400">{client.updatedAt}</p>
             </div>
           </div>
         ))
