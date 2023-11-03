@@ -1,4 +1,4 @@
-import { SetStateAction, Dispatch } from "react";
+import { SetStateAction, Dispatch, FormEvent, ChangeEvent } from "react";
 
 export type User = {
   firstName: string;
@@ -10,17 +10,21 @@ export type User = {
 };
 
 export type Client = {
-  name: string | undefined;
-  business: string | undefined;
-  date: string | undefined;
-  email: string | undefined;
-  description?: string | undefined;
-  id: string | undefined;
-  modifiedDate: string;
+  _id: string;
+  firstName: string;
+  lastName: string;
+  businessName: string;
+  email: string;
+  phone: string;
+  antiquity: string;
+  debt: number;
+  userId: string;
+  updatedAt: string;
+  createdAt: string;
 };
 
 export type ClientEdit = {
-  name?: string;
+  firstname?: string;
   business?: string;
   date?: string;
   email?: string;
@@ -35,19 +39,25 @@ export interface FormHooks {
   resetForm: () => void;
   generateUniqueId: () => string;
   generateDate: () => string;
+  handleSubmitCreate: (e: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleInputCreate: (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
 }
 
-export interface NotificationProps {
-  errorMessage: string[];
-  error: boolean;
-}
+export type NotificationProps = {
+  message: string | undefined;
+  setMessage: (message: string) => void;
+  statusColor: "danger" | "success";
+  setStatusColor: Dispatch<SetStateAction<"danger" | "success">>;
+};
 
-export interface ContextProps {
+export interface ClientProps {
   clients: Client[];
   setClients: Dispatch<SetStateAction<Client[]>>;
   clientId: string | undefined;
-  setClientId: Dispatch<SetStateAction<string | undefined>>;
-  updateClient: (client: ClientEdit) => void;
-  deleteClient: (clientId: string | undefined) => void;
+  setClientId: Dispatch<SetStateAction<string>>;
   emptyClient: Client;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }

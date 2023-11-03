@@ -1,5 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import { LoginPage, DashboardPage, HomePage, RouterLayout } from "./pages/";
+import {
+  ClientPage,
+  LoginPage,
+  DashboardPage,
+  HomePage,
+  RouterLayout,
+} from "./pages/";
 import { PrivateRoute } from "./pages/PrivateRoute";
 
 export const AppRouter: React.FC<{}> = () => {
@@ -10,6 +16,7 @@ export const AppRouter: React.FC<{}> = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/dashboard/:id" element={<ClientPage />} />
         </Route>
       </Route>
     </Routes>
