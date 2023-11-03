@@ -19,7 +19,7 @@ export const LoginPage: React.FC<{}> = () => {
     <Navigate to="/dashboard" replace />
   ) : (
     <>
-      <form className="container flex flex-column justify-center gap-4 w-[50%] h-full">
+      <form className="container flex flex-column justify-center gap-4 w-[50%] h-[85%]">
         <input
           name="email"
           type="email"

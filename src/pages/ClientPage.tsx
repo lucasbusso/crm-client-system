@@ -12,7 +12,7 @@ export const ClientPage: React.FC<{}> = () => {
 
   return (
     <div className="h-full">
-      <Link to="/dashboard">Dashboard</Link>
+      <Link to="/dashboard">← Dashboard</Link>
       {!client ? (
         <div className="w-full h-full grid place-content-center">
           <Suspense>

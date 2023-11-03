@@ -65,7 +65,7 @@ const Client = () => {
             <ModalComponent />
             <div className="flex justify-between mt-3">
               <Link className="font-semibold" to={`/dashboard/${client._id}`}>
-                View details
+                View details →
               </Link>
               <p className="text-sm text-slate-400">{client.updatedAt}</p>
             </div>

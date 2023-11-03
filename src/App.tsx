@@ -16,7 +16,7 @@ function App() {
           <RegisterProvider>
             <LoginProvider>
               <BrowserRouter>
-                <Container className="h-[100vh]">
+                <Container className="h-[98vh]">
                   <AppRouter />
                 </Container>
               </BrowserRouter>
