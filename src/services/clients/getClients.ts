@@ -10,14 +10,17 @@ interface SuccessResponse extends AxiosResponse {
   statusText: string;
 }
 
-const getClients = async (): Promise<SuccessResponse> => {
+const getClients = async (query: string): Promise<SuccessResponse> => {
   try {
     const token = getCookie("accessToken=");
-    const response = await axios.get(`${import.meta.env.VITE_API_URL}/client`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    });
+    const response = await axios.get(
+      `${import.meta.env.VITE_API_URL}/client${query}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
 
     return response;
   } catch (error: any) {

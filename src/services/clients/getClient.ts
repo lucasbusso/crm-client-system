@@ -13,7 +13,6 @@ const getClient = async (id: string | undefined): Promise<Client> => {
         },
       }
     );
-    console.log(response.data);
     return response.data as Client;
   } catch (error: any) {
     return error;

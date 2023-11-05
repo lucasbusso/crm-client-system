@@ -56,9 +56,7 @@ function useRegister(): registerHook {
     dispatch(registerThunk(newUser))
       .unwrap()
       .then((response: any) => {
-        console.log({ response }, { error });
         if (response?.status === 201) {
-          console.log({ response });
           setStatusColor("success");
           setMessage("User created successfully");
           mutate("/user");

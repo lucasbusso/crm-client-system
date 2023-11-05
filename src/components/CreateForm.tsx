@@ -11,7 +11,7 @@ const CreateForm: React.FC<object> = (): JSX.Element => {
 
   return (
     <div className="md:w-1/2 w-full relative">
-      <h2 className="font-bold text-2xl my-6 text-center">Add new client</h2>
+      <h2 className="font-bold text-white text-2xl my-6">Add new client</h2>
       <form
         className="bg-white shadow-sm rounded-md opacity-95 py-10 px-5"
         onSubmit={(e) => handleSubmitCreate(e)}

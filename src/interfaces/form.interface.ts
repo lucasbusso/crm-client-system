@@ -49,4 +49,6 @@ export interface ClientProps {
   emptyClient: Client;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  filter: string | null;
+  setFilter: Dispatch<SetStateAction<string | null>>;
 }

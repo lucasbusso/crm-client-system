@@ -7,6 +7,7 @@ import { store } from "./redux/store";
 import { RegisterProvider } from "./context/register.context";
 import { LoginProvider } from "./context/login.context";
 import { NotificationProvider } from "./context/notification.context";
+import { FilterProvider } from "./context/filter.context";
 
 function App() {
   return (
@@ -15,11 +16,13 @@ function App() {
         <ClientProvider>
           <RegisterProvider>
             <LoginProvider>
-              <BrowserRouter>
-                <Container className="h-[98vh]">
-                  <AppRouter />
-                </Container>
-              </BrowserRouter>
+              <FilterProvider>
+                <BrowserRouter>
+                  <Container className="h-[98vh]">
+                    <AppRouter />
+                  </Container>
+                </BrowserRouter>
+              </FilterProvider>
             </LoginProvider>
           </RegisterProvider>
         </ClientProvider>
