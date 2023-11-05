@@ -27,14 +27,19 @@ export const ClientProvider: React.FC<{
   const [clients, setClients] = useState<Client[]>([]);
   const [clientId, setClientId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [filter, setFilter] = useState<string | null>(null);
+
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
   useEffect(() => {
     const token = getCookie("accessToken=");
     setLoading(true);
-    const fetchClients = async () => {
+
+    if (!isAuth) setFilter(null);
+
+    const fetchClients = async (query: string) => {
       try {
-        const response = await getClients();
+        const response = await getClients(query);
         const { data } = response;
         const formattedClients = data.data.map((client) => ({
           ...client,
@@ -48,9 +53,13 @@ export const ClientProvider: React.FC<{
       }
     };
     if (token && isAuth) {
-      fetchClients();
+      if (filter) {
+        fetchClients(`?filter=${filter}`);
+      } else {
+        fetchClients("");
+      }
     }
-  }, [isAuth]);
+  }, [isAuth, filter]);
 
   const value: ClientProps = {
     clients,
@@ -60,6 +69,8 @@ export const ClientProvider: React.FC<{
     emptyClient,
     loading,
     setLoading,
+    filter,
+    setFilter,
   };
 
   return (
