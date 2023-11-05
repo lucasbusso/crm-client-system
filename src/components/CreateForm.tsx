@@ -87,14 +87,14 @@ const CreateForm: React.FC<object> = (): JSX.Element => {
         <div className="block mb-6">
           <Form.Select
             aria-label="Select a type"
-            name="type"
             className="border-2 p-2 rounded-md w-full"
+            name="role"
+            onChange={(e) => handleInputCreate(e)}
           >
             <option value="cliente">Cliente</option>
             <option value="proveedor">Proveedor</option>
           </Form.Select>
         </div>
-
         <Button
           type="submit"
           variant="primary"

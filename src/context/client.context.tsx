@@ -16,6 +16,7 @@ const emptyClient: Client = {
   antiquity: "",
   debt: 0,
   userId: "",
+  role: "cliente",
   updatedAt: "",
   createdAt: "",
 };

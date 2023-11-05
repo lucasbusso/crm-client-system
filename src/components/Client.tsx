@@ -26,7 +26,7 @@ const Client = () => {
               <p className="uppercase font-bold text-slate-600 py-2">
                 First Name:{" "}
                 <span className="font-normal normal-case">
-                  {client.firstName}
+                  {client.firstName} - {client.role}
                 </span>
               </p>
               <p className="uppercase font-bold text-slate-600 py-2">

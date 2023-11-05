@@ -19,6 +19,7 @@ export type Client = {
   antiquity: string;
   debt: number;
   userId: string;
+  role: "cliente" | "proveedor";
   updatedAt: string;
   createdAt: string;
 };

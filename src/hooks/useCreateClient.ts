@@ -5,7 +5,6 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Client } from "../interfaces/form.interface";
 import { useClientContext } from "../context/client.context";
 import { useNotificationContext } from "../context/notification.context";
@@ -15,11 +14,9 @@ type createClientHook = {
   formData: Client;
   setFormData: Dispatch<SetStateAction<Client>>;
   resetForm: () => void;
-  generateUniqueId: () => string;
-  generateDate: () => string;
   handleSubmitCreate: (e: FormEvent<HTMLFormElement>) => Promise<void>;
   handleInputCreate: (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
 };
 
@@ -27,24 +24,6 @@ function useCreateClient(initialValues: Client): createClientHook {
   const [formData, setFormData] = useState<Client>(initialValues);
   const { setLoading, setClients } = useClientContext();
   const { setMessage, setStatusColor } = useNotificationContext();
-
-  function generateUniqueId() {
-    const id = uuidv4();
-    return id.toString();
-  }
-
-  function generateDate() {
-    const date = new Date(Date.now());
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    };
-    return date.toLocaleDateString(undefined, options);
-  }
 
   async function handleSubmitCreate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -71,7 +50,7 @@ function useCreateClient(initialValues: Client): createClientHook {
   }
 
   function handleInputCreate(
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -88,8 +67,6 @@ function useCreateClient(initialValues: Client): createClientHook {
     formData,
     setFormData,
     resetForm,
-    generateUniqueId,
-    generateDate,
     handleSubmitCreate,
     handleInputCreate,
   };
