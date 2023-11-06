@@ -18,7 +18,7 @@ const Client = () => {
       ) : clients && clients.length > 0 ? (
         clients.map((client) => (
           <div
-            className="mr-3 mb-3 bg-white shadow-sm rounded-md opacity-95 px-5 py-10 "
+            className="mr-3 mb-3 bg-white shadow-sm rounded-md opacity-95 px-5 py-10"
             key={client._id}
             data-clientid={client._id}
           >
@@ -60,7 +60,13 @@ const Client = () => {
             </p>
             <p className="uppercase font-bold text-slate-600 py-2">
               Debt:{" "}
-              <span className="font-normal normal-case">{client.debt}</span>
+              <span
+                className={`font-bold normal-case ${
+                  client.role == "cliente" ? "text-green-500" : "text-red-500"
+                }`}
+              >
+                {client.debt}
+              </span>
             </p>
             <ModalComponent />
             <div className="flex justify-between mt-3">
