@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Button } from "react-bootstrap";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { useAppSelector } from "../redux/hooks";
 import { Navigate } from "react-router-dom";
 import { RegisterModal } from "../components";
@@ -20,22 +20,24 @@ export const LoginPage: React.FC<{}> = () => {
   ) : (
     <>
       <form className="container flex flex-column justify-center gap-4 w-[50%] h-[85%]">
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          className="border-2 p-2 rounded-md"
-          value={user.email}
-          onChange={handleInputLogin}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          className="border-2 p-2 rounded-md"
-          value={user.password}
-          onChange={handleInputLogin}
-        />
+        <FloatingLabel controlId="email" label="Email">
+          <Form.Control
+            name="email"
+            type="email"
+            placeholder="Email"
+            value={user.email}
+            onChange={handleInputLogin}
+          />
+        </FloatingLabel>
+        <FloatingLabel controlId="password" label="Password">
+          <Form.Control
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={user.password}
+            onChange={handleInputLogin}
+          />
+        </FloatingLabel>
         <div className="flex flex-col gap-2">
           <Button
             type="submit"

@@ -26,7 +26,7 @@ function FilterBy() {
   return (
     <div className="flex gap-4 items-center">
       <Dropdown data-bs-theme="dark">
-        <Dropdown.Toggle variant="dark" id="dropdown-basic">
+        <Dropdown.Toggle variant="dark" className="bg-[#21252D]">
           Filtrar
         </Dropdown.Toggle>
 
