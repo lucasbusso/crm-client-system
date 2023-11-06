@@ -6,7 +6,7 @@ const ClientsList = () => {
   const { clients } = useClientContext();
   return (
     <div className="md:w-1/2 w-full">
-      <div className="flex justify-between my-6">
+      <div className="flex justify-between my-6 h-[40px]">
         <h2 className="font-bold text-2xl text-white">
           Clients list{" "}
           <span className="font-medium text-sm">{`(${clients.length} results)`}</span>
