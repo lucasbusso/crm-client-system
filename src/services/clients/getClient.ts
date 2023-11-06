@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCookie } from "../../utils";
-import { Client } from "../../interfaces/form.interface";
+import { Client } from "../../interfaces/";
 
 const getClient = async (id: string | undefined): Promise<Client> => {
   try {

@@ -1,19 +1,19 @@
 import React, { createContext, useContext, useState } from "react";
 import { SetStateAction, Dispatch } from "react";
 
-interface LoginContextProps {
+interface LoginContext {
   login: boolean;
   setLogin: Dispatch<SetStateAction<boolean>>;
 }
 
-const LoginContext = createContext<LoginContextProps | null>(null);
+const LoginContext = createContext<LoginContext | null>(null);
 
 export const LoginProvider: React.FC<{
   children: JSX.Element;
 }> = ({ children }) => {
   const [login, setLogin] = useState<boolean>(false);
 
-  const value: LoginContextProps = {
+  const value: LoginContext = {
     login,
     setLogin,
   };

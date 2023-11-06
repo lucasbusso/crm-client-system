@@ -8,7 +8,7 @@ import {
 import { mutate } from "swr";
 
 import { useNotificationContext } from "../context/notification.context";
-import { User } from "../interfaces/form.interface";
+import { User } from "../interfaces/";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { registerThunk } from "../redux/thunks/register.thunk";
 import { useUserContext } from "../context/register.context";

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { getCookie } from "../../utils";
-import { Client } from "../../interfaces/form.interface";
+import { Client } from "../../interfaces/";
 
 interface SuccessResponse extends AxiosResponse {
   data: {
@@ -21,7 +21,6 @@ const getClients = async (query: string): Promise<SuccessResponse> => {
         },
       }
     );
-
     return response;
   } catch (error: any) {
     return error;

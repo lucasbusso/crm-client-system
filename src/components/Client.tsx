@@ -1,11 +1,12 @@
 import React, { Suspense } from "react";
-import { useClientContext } from "../context/client.context";
-import ModalComponent from "./Modal";
+import { useClientContext, useUpdateContext } from "../context/";
 import { Link } from "react-router-dom";
-const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
+import { Button } from "react-bootstrap";
+const LoadingSpinner = React.lazy(() => import("./Spinner"));
 
 const Client = () => {
   const { clients, loading } = useClientContext();
+  const { fetchClient } = useUpdateContext();
 
   return (
     <div className="md:max-h-[100%] md:h-[610px] md:overflow-y-scroll rounded-md">
@@ -68,13 +69,19 @@ const Client = () => {
                 {client.debt}
               </span>
             </p>
-            <ModalComponent />
-            <div className="flex justify-between mt-3">
+            <div className="flex justify-between my-3">
               <Link className="font-semibold" to={`/dashboard/${client._id}`}>
                 View details →
               </Link>
               <p className="text-sm text-slate-400">{client.updatedAt}</p>
             </div>
+
+            <p
+              className="cursor-pointer font-semibold"
+              onClick={() => fetchClient(client._id)}
+            >
+              Update
+            </p>
           </div>
         ))
       ) : (

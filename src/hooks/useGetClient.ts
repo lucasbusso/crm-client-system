@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getClient } from "../services/clients/getClient";
-import { Client } from "../interfaces/form.interface";
+import { Client } from "../interfaces/";
 
 /**
  * Fetch the client with the given id

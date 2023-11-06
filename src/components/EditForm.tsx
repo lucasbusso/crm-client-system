@@ -1,118 +1,104 @@
-import { ChangeEvent, useState, useEffect } from "react";
-import { useClientContext } from "../context/client.context";
-import { ClientEdit } from "../interfaces/form.interface";
-import { useCreateClient } from "../hooks";
+import React, { Suspense } from "react";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
+import { useUpdateContext } from "../context";
+
+const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 const EditForm = (): JSX.Element => {
-  const { clients, setClientId, clientId, updateClient, emptyClient } =
-    useClientContext();
-  const [clientEdited, setClientEdited] = useState<ClientEdit | undefined>(
-    emptyClient
-  );
-
-  const { generateDate } = useCreateForm(emptyClient);
-
-  useEffect(() => {
-    const clientToEdit = clients.find((client) => client.id === clientId);
-    if (clientToEdit) {
-      setClientEdited(clientToEdit);
-    }
-  }, [clients, clientId]);
-
-  const handleSubmitEdit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (clientEdited) {
-      updateClient(clientEdited);
-      setClientId("");
-    }
-  };
-
-  const handleInputEdit = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setClientEdited((prevData) => ({
-      ...prevData,
-      [name]: value,
-      modifiedDate: generateDate(),
-    }));
-  };
+  const { handleInputUpdate, handleSubmitUpdate, clientUpdate, loading } =
+    useUpdateContext();
 
   return (
     <form
       className="bg-white shadow-sm rounded-md pb-10 px-5"
-      onSubmit={(e) => handleSubmitEdit(e)}
+      onSubmit={(e) => handleSubmitUpdate(e)}
     >
-      <div className="block mb-6">
-        <label htmlFor="name" className="uppercase font-bold text-slate-600">
-          Name
-        </label>
-        <input
-          name="name"
-          type="text"
-          className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-          value={clientEdited?.name}
-          onChange={handleInputEdit}
-        />
-      </div>
-      <div className="block mb-6">
-        <label
-          htmlFor="business"
-          className="uppercase font-bold text-slate-600"
+      <div className="mb-6 flex gap-4 w-full">
+        <FloatingLabel
+          controlId="firstName"
+          label="First name"
+          className="w-full"
         >
-          Business Name
-        </label>
-        <input
-          name="business"
-          type="text"
-          className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-          value={clientEdited?.business}
-          onChange={handleInputEdit}
-        />
+          <Form.Control
+            type="text"
+            placeholder="Enter first name"
+            value={clientUpdate?.firstName}
+            onChange={(e) => handleInputUpdate(e)}
+            name="firstName"
+          />
+        </FloatingLabel>
+        <FloatingLabel
+          controlId="lastName"
+          label="Last name"
+          className="w-full"
+        >
+          <Form.Control
+            type="text"
+            placeholder="Enter last name"
+            value={clientUpdate?.lastName}
+            onChange={(e) => handleInputUpdate(e)}
+            name="lastName"
+          />
+        </FloatingLabel>
       </div>
       <div className="block mb-6">
-        <label htmlFor="email" className="uppercase font-bold text-slate-600">
-          Email
-        </label>
-        <input
-          name="email"
-          type="email"
-          className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-          value={clientEdited?.email}
-          onChange={handleInputEdit}
-        />
+        <FloatingLabel controlId="business" label="Business name">
+          <Form.Control
+            type="text"
+            placeholder="Enter business name"
+            value={clientUpdate?.businessName}
+            onChange={(e) => handleInputUpdate(e)}
+            name="businessName"
+          />
+        </FloatingLabel>
       </div>
       <div className="block mb-6">
-        <label htmlFor="date" className="uppercase font-bold text-slate-600">
-          Registration
-        </label>
-        <input
-          name="date"
-          type="date"
-          className="border-2 w-full p-2 mt-2 placeholder-slate-500 bg-slate-200 rounded-md hover:cursor-not-allowed"
-          value={clientEdited?.date}
-          onChange={handleInputEdit}
-          disabled
-        />
+        <FloatingLabel controlId="email" label="Email">
+          <Form.Control
+            type="text"
+            placeholder="Enter email"
+            value={clientUpdate?.email}
+            onChange={(e) => handleInputUpdate(e)}
+            name="email"
+          />
+        </FloatingLabel>
       </div>
       <div className="block mb-6">
-        <label htmlFor="date" className="uppercase font-bold text-slate-600">
-          Description (optional)
-        </label>
-        <textarea
-          name="description"
-          id="description"
-          className="border-2 w-full p-2 mt-2 placeholder-slate-500 rounded-md"
-          value={clientEdited?.description}
-          onChange={handleInputEdit}
-        />
+        <FloatingLabel controlId="phone" label="Phone">
+          <Form.Control
+            type="text"
+            placeholder="Enter phone"
+            value={clientUpdate?.phone}
+            onChange={(e) => handleInputUpdate(e)}
+            name="phone"
+          />
+        </FloatingLabel>
+      </div>
+      <div className="block mb-6">
+        <FloatingLabel controlId="debt" label="Debt">
+          <Form.Control
+            type="number"
+            placeholder="Debt"
+            value={clientUpdate?.debt}
+            onChange={(e) => handleInputUpdate(e)}
+            name="debt"
+          />
+        </FloatingLabel>
       </div>
 
-      <input
+      <Button
         type="submit"
+        variant="primary"
         className="bg-indigo-600 w-full text-white uppercase font-bold hover:bg-indigo-700 transition-colors py-2 rounded-md"
-        value="Save changes"
-      />
+      >
+        {loading ? (
+          <Suspense>
+            <LoadingSpinner />
+          </Suspense>
+        ) : (
+          "Save changes"
+        )}
+      </Button>
     </form>
   );
 };
