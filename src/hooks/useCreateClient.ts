@@ -5,7 +5,7 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
-import { Client } from "../interfaces/form.interface";
+import { Client } from "../interfaces/";
 import { useClientContext } from "../context/client.context";
 import { useNotificationContext } from "../context/notification.context";
 import { createClientService } from "../services/clients/createClient";

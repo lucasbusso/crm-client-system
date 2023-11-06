@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { Client } from "../../interfaces/form.interface";
+import { Client } from "../../interfaces/";
 import { getCookie } from "../../utils";
 
 const updateClient = async (
@@ -7,8 +7,9 @@ const updateClient = async (
   client: Client
 ): Promise<AxiosResponse | AxiosError> => {
   try {
+    console.log("service:", { client });
     const token = getCookie("accessToken=");
-    const response = await axios.post(
+    const response = await axios.put(
       `${import.meta.env.VITE_API_URL}/client/${id}`,
       client,
       {
@@ -17,6 +18,7 @@ const updateClient = async (
         },
       }
     );
+    console.log("from service" + { response });
     return response;
   } catch (error: any) {
     return error;

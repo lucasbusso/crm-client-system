@@ -1,12 +1,32 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { Client, ClientProps } from "../interfaces/form.interface";
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
+import { Client } from "../interfaces/";
 import { getClients } from "../services/clients/getClients";
 import { formatDate, getCookie } from "../utils";
 import { useAppSelector } from "../redux/hooks";
 
+interface ClientProps {
+  clients: Client[];
+  setClients: Dispatch<SetStateAction<Client[]>>;
+  clientId: string | undefined;
+  setClientId: Dispatch<SetStateAction<string>>;
+  emptyClient: Client;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  filter: string | null;
+  setFilter: Dispatch<SetStateAction<string | null>>;
+  fetchClients: (query: string) => Promise<void>;
+}
+
 const ClientContext = createContext<ClientProps | null>(null);
 
-const emptyClient: Client = {
+export const emptyClient: Client = {
   _id: "",
   firstName: "",
   lastName: "",
@@ -17,6 +37,7 @@ const emptyClient: Client = {
   debt: 0,
   userId: "",
   role: "cliente",
+  isActive: true,
   updatedAt: "",
   createdAt: "",
 };
@@ -31,27 +52,30 @@ export const ClientProvider: React.FC<{
 
   const isAuth = useAppSelector((state) => state.authReducer.isAuth);
 
+  async function fetchClients(query: string) {
+    setLoading(true);
+
+    try {
+      const response = await getClients(query);
+      const { data } = response;
+      const formattedClients = data.data.map((client) => ({
+        ...client,
+        updatedAt: `last update: ${formatDate(client.updatedAt)}`,
+        createdAt: `${formatDate(client.createdAt)}`,
+      }));
+      setClients(formattedClients);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     const token = getCookie("accessToken=");
     setLoading(true);
 
     if (!isAuth) setFilter(null);
 
-    const fetchClients = async (query: string) => {
-      try {
-        const response = await getClients(query);
-        const { data } = response;
-        const formattedClients = data.data.map((client) => ({
-          ...client,
-          updatedAt: `last update: ${formatDate(client.updatedAt)}`,
-          createdAt: `${formatDate(client.createdAt)}`,
-        }));
-        setClients(formattedClients);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     if (token && isAuth) {
       if (filter) {
         fetchClients(`?filter=${filter}`);
@@ -71,6 +95,7 @@ export const ClientProvider: React.FC<{
     setLoading,
     filter,
     setFilter,
+    fetchClients,
   };
 
   return (

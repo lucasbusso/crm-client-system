@@ -1,19 +1,19 @@
 import React, { createContext, useContext, useState } from "react";
 import { SetStateAction, Dispatch } from "react";
 
-interface UserContextProps {
+interface UserContext {
   register: boolean;
   setRegister: Dispatch<SetStateAction<boolean>>;
 }
 
-const RegisterContext = createContext<UserContextProps | null>(null);
+const RegisterContext = createContext<UserContext | null>(null);
 
 export const RegisterProvider: React.FC<{
   children: JSX.Element;
 }> = ({ children }) => {
   const [register, setRegister] = useState<boolean>(false);
 
-  const value: UserContextProps = {
+  const value: UserContext = {
     register,
     setRegister,
   };

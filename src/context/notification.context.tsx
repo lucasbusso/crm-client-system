@@ -1,7 +1,20 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { NotificationProps } from "../interfaces/form.interface";
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 
-const NotificationContext = createContext<NotificationProps | null>(null);
+type NotificationContext = {
+  message: string | undefined;
+  setMessage: (message: string | undefined) => void;
+  statusColor: "danger" | "success";
+  setStatusColor: Dispatch<SetStateAction<"danger" | "success">>;
+};
+
+const NotificationContext = createContext<NotificationContext | null>(null);
 
 export const NotificationProvider: React.FC<{
   children: JSX.Element;
@@ -21,7 +34,7 @@ export const NotificationProvider: React.FC<{
     };
   }, [message]);
 
-  const value: NotificationProps = {
+  const value: NotificationContext = {
     message,
     setMessage,
     statusColor,

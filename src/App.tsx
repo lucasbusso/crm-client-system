@@ -8,23 +8,26 @@ import { RegisterProvider } from "./context/register.context";
 import { LoginProvider } from "./context/login.context";
 import { NotificationProvider } from "./context/notification.context";
 import { FilterProvider } from "./context/filter.context";
+import { UpdateProvider } from "./context/update.context";
 
 function App() {
   return (
     <Provider store={store}>
       <NotificationProvider>
         <ClientProvider>
-          <RegisterProvider>
-            <LoginProvider>
-              <FilterProvider>
-                <BrowserRouter>
-                  <Container className="h-[98vh]">
-                    <AppRouter />
-                  </Container>
-                </BrowserRouter>
-              </FilterProvider>
-            </LoginProvider>
-          </RegisterProvider>
+          <UpdateProvider>
+            <RegisterProvider>
+              <LoginProvider>
+                <FilterProvider>
+                  <BrowserRouter>
+                    <Container className="h-[98vh]">
+                      <AppRouter />
+                    </Container>
+                  </BrowserRouter>
+                </FilterProvider>
+              </LoginProvider>
+            </RegisterProvider>
+          </UpdateProvider>
         </ClientProvider>
       </NotificationProvider>
     </Provider>
