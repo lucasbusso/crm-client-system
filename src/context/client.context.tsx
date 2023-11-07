@@ -14,8 +14,6 @@ import { useAppSelector } from "../redux/hooks";
 interface ClientProps {
   clients: Client[];
   setClients: Dispatch<SetStateAction<Client[]>>;
-  clientId: string | undefined;
-  setClientId: Dispatch<SetStateAction<string>>;
   emptyClient: Client;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
@@ -46,7 +44,6 @@ export const ClientProvider: React.FC<{
   children: JSX.Element;
 }> = ({ children }) => {
   const [clients, setClients] = useState<Client[]>([]);
-  const [clientId, setClientId] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [filter, setFilter] = useState<string | null>(null);
 
@@ -88,8 +85,6 @@ export const ClientProvider: React.FC<{
   const value: ClientProps = {
     clients,
     setClients,
-    clientId,
-    setClientId,
     emptyClient,
     loading,
     setLoading,

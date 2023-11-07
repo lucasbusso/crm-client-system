@@ -1,14 +1,16 @@
 import { Container } from "react-bootstrap";
-import { ClientProvider } from "./context/client.context";
 import { BrowserRouter } from "react-router-dom";
-import { AppRouter } from "./Router";
 import { Provider } from "react-redux";
+import { AppRouter } from "./Router";
 import { store } from "./redux/store";
-import { RegisterProvider } from "./context/register.context";
-import { LoginProvider } from "./context/login.context";
-import { NotificationProvider } from "./context/notification.context";
-import { FilterProvider } from "./context/filter.context";
-import { UpdateProvider } from "./context/update.context";
+import {
+  ClientProvider,
+  RegisterProvider,
+  LoginProvider,
+  NotificationProvider,
+  FilterProvider,
+  UpdateProvider,
+} from "./context/";
 
 function App() {
   return (
@@ -20,7 +22,7 @@ function App() {
               <LoginProvider>
                 <FilterProvider>
                   <BrowserRouter>
-                    <Container className="h-[98vh]">
+                    <Container>
                       <AppRouter />
                     </Container>
                   </BrowserRouter>

@@ -11,7 +11,6 @@ import { Client } from "../interfaces";
 import { updateClient } from "../services/clients/updateClient";
 import { getClient } from "../services/clients/getClient";
 import { useClientContext, useNotificationContext } from ".";
-import { getClients } from "../services/clients/getClients";
 
 type UpdateContext = {
   clientUpdate: Client | null;
