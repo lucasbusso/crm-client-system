@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
 import { useClientContext, useUpdateContext } from "../context/";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
 const LoadingSpinner = React.lazy(() => import("./Spinner"));
 
 const Client = () => {
@@ -62,8 +61,8 @@ const Client = () => {
             <p className="uppercase font-bold text-slate-600 py-2">
               Debt:{" "}
               <span
-                className={`font-bold normal-case ${
-                  client.role == "cliente" ? "text-green-500" : "text-red-500"
+                className={`font-bold normal-case text-white px-2 py-1 rounded-md ${
+                  client.role == "cliente" ? "bg-green-400" : "bg-red-400"
                 }`}
               >
                 {client.debt}

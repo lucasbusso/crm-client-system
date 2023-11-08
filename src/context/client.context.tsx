@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { Client } from "../interfaces/";
 import { getClients } from "../services/clients/getClients";
-import { formatDate, getCookie } from "../utils";
+import { formatDate, formatPrice, getCookie } from "../utils";
 import { useAppSelector } from "../redux/hooks";
 
 interface ClientProps {
@@ -32,7 +32,7 @@ export const emptyClient: Client = {
   email: "",
   phone: "",
   antiquity: "",
-  debt: 0,
+  debt: "0",
   userId: "",
   role: "cliente",
   isActive: true,
@@ -55,10 +55,12 @@ export const ClientProvider: React.FC<{
     try {
       const response = await getClients(query);
       const { data } = response;
+      console.log({ data });
       const formattedClients = data.data.map((client) => ({
         ...client,
         updatedAt: `last update: ${formatDate(client.updatedAt)}`,
         createdAt: `${formatDate(client.createdAt)}`,
+        debt: formatPrice(client.debt).toString(),
       }));
       setClients(formattedClients);
       setLoading(false);

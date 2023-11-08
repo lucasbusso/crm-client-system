@@ -6,7 +6,7 @@ export type Client = {
   email: string;
   phone: string;
   antiquity: string;
-  debt: number;
+  debt: string;
   userId: string;
   role: "cliente" | "proveedor";
   isActive: boolean;
