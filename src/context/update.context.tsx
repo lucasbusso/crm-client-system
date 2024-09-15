@@ -19,7 +19,7 @@ type UpdateContext = {
   handleInputUpdate: (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => void;
-  fetchClient: (id: string) => Promise<void>;
+  handleOpenEditModal: (id: string) => Promise<void>;
   openModal: boolean;
   setOpenModal: Dispatch<SetStateAction<boolean>>;
   loading: boolean;
@@ -37,7 +37,7 @@ export const UpdateProvider: React.FC<{
   const { setMessage, setStatusColor } = useNotificationContext();
   const { fetchClients } = useClientContext();
 
-  async function fetchClient(id: string) {
+  async function handleOpenEditModal(id: string) {
     try {
       const response = await getClient(id);
       setOpenModal(true);
@@ -58,6 +58,7 @@ export const UpdateProvider: React.FC<{
         setStatusColor("success");
         setLoading(false);
         fetchClients("");
+        getClient(clientUpdate._id);
       }
     } catch (error) {
       setMessage("Error updating client");
@@ -88,7 +89,7 @@ export const UpdateProvider: React.FC<{
     setClientUpdate,
     handleSubmitUpdate,
     handleInputUpdate,
-    fetchClient,
+    handleOpenEditModal,
     openModal,
     setOpenModal,
     loading,

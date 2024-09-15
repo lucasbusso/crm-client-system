@@ -1,5 +1,5 @@
 import axios from "axios";
-import { RegistrationData } from "../interfaces/redux.interface";
+import { RegistrationData } from "@/interfaces/redux.interface";
 
 const registerService = async (userData: RegistrationData) => {
   try {

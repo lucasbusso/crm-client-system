@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { registerService } from "../../services/register.service";
+import { registerService } from "../../services/auth/register.service";
 import { RegistrationData } from "../../interfaces/redux.interface";
 
 export const registerThunk = createAsyncThunk(
