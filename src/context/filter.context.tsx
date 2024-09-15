@@ -1,9 +1,9 @@
 import React, {
+  Dispatch,
+  SetStateAction,
   createContext,
   useContext,
   useState,
-  Dispatch,
-  SetStateAction,
 } from "react";
 
 interface FilterContext {
