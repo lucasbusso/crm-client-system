@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AuthCredentials } from "../interfaces/redux.interface";
+import { AuthCredentials } from "../../interfaces/redux.interface";
 
 const loginService = async (userData: AuthCredentials) => {
   try {

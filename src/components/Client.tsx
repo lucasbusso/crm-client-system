@@ -5,7 +5,7 @@ const LoadingSpinner = React.lazy(() => import("./Spinner"));
 
 const Client = () => {
   const { clients, loading } = useClientContext();
-  const { fetchClient } = useUpdateContext();
+  const { handleOpenEditModal } = useUpdateContext();
 
   return (
     <div className="md:max-h-[100%] md:h-[610px] md:overflow-y-scroll rounded-md">
@@ -77,7 +77,7 @@ const Client = () => {
 
             <p
               className="cursor-pointer font-semibold"
-              onClick={() => fetchClient(client._id)}
+              onClick={() => handleOpenEditModal(client._id)}
             >
               Update
             </p>
