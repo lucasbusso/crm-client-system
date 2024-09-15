@@ -6,5 +6,11 @@ Of course, you can deploy this in the cloud if you want.
 Implementing firebase
 
 - Crear modal de seguridad para la confirmacion del delete user
-- Crear ruta para cada cliente con id
-- Agregar suspense y spinner
+- Agregar cookies analytics
+- Agregar Docker
+- Agregar tests
+- Filtro de ordenar lista
+- Añadir theme dark / light
+- Añadir switch de lenguaje
+- Compound de los context
+- Hacerlo responsive mobile
