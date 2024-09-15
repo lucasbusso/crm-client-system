@@ -1,9 +1,10 @@
 export { default as Client } from "./Client";
+export { default as ClientDetail } from "./ClientDetail";
 export { default as ClientsList } from "./ClientsList";
 export { default as CreateForm } from "./CreateForm";
 export { default as EditForm } from "./EditForm";
+export { default as EditModalComponent } from "./EditModalComponent";
 export { default as FilterBy } from "./FilterBy";
-export { default as Modal } from "./EditModalComponent";
 export { default as NavbarComponent } from "./NavbarComponent";
 export { default as Notification } from "./Notification";
 export { default as RegisterModal } from "./RegisterModal";
