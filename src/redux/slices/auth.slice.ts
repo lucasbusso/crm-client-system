@@ -41,7 +41,10 @@ const initialState: AuthState = {
     getCookie("accessToken") !== undefined
       ? {
           email: tokenDecode<TokenJWT>(getCookie("accessToken")!).email,
-          uid: tokenDecode<TokenJWT>(getCookie("accessToken")!)._id,
+          uid:
+            tokenDecode<TokenJWT>(getCookie("accessToken")!)._id ??
+            tokenDecode<TokenJWT>(getCookie("accessToken")!).id ??
+            null,
           firstName: tokenDecode<TokenJWT>(getCookie("accessToken")!).name,
           role: tokenDecode<TokenJWT>(getCookie("accessToken")!).role,
         }

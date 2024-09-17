@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
 import { useParams } from "react-router-dom";
-import EditModalComponent from "../components/EditModalComponent";
 import { useGetClient } from "../hooks";
 import { useClientContext, useUpdateContext } from "../context";
-import { ClientDetail } from "../components";
+import { ClientDetail, ConfirmDelete, EditForm } from "../components";
+import { normalizeId } from "../utils/normalizeId";
 const LoadingSpinner = React.lazy(() => import("../components/Spinner"));
 
 export const ClientPage = () => {
@@ -11,11 +11,13 @@ export const ClientPage = () => {
   const { id } = params;
   const clientRaw = useGetClient(id);
   const { clients } = useClientContext();
-  const client = clients.find((client) => client._id === clientRaw?._id);
-  const { openModal, loading } = useUpdateContext();
+  const client = clients.find(
+    (client) => normalizeId(client) === normalizeId(clientRaw)
+  );
+  const { openModal, loading, confirm } = useUpdateContext();
 
   return (
-    <div className="md:max-h-[100%] md:h-[610px] md:overflow-y-scroll rounded-md">
+    <div className="md:max-h-[100%] md:h-[610px]  rounded-md">
       {loading && (
         <div className="w-full h-full grid place-content-center">
           <Suspense fallback={<div>Loading...</div>}>
@@ -25,7 +27,8 @@ export const ClientPage = () => {
       )}
       {client && <ClientDetail client={client} />}
 
-      {openModal && <EditModalComponent />}
+      {openModal && <EditForm />}
+      {confirm && <ConfirmDelete id={normalizeId(client)} />}
     </div>
   );
 };

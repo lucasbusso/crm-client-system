@@ -1,15 +1,16 @@
+import { normalizeId } from "../utils/normalizeId";
 import { useUpdateContext } from "../context";
 import { Client } from "../interfaces";
 import { Link } from "react-router-dom";
 
 const ClientDetail = ({ client }: { client: Client }) => {
-  const { handleOpenEditModal } = useUpdateContext();
+  const { handleOpenEditModal, setConfirm } = useUpdateContext();
 
   return (
     <div
-      className="mr-3 mb-3 bg-white shadow-sm rounded-md opacity-95 px-5 py-10"
-      key={client._id}
-      data-clientid={client._id}
+      className=" mb-3 bg-white shadow-sm rounded-md opacity-95 px-5 py-10"
+      key={normalizeId(client)}
+      data-clientid={normalizeId(client)}
     >
       <table className="min-w-full table-auto">
         <thead className="bg-gray-50">
@@ -48,8 +49,8 @@ const ClientDetail = ({ client }: { client: Client }) => {
             </td>
             <td className="border-t px-4 py-2 text-sm">
               <span
-                className={`font-bold text-white px-2 py-1 rounded-md ${
-                  Number(client.debt) > 0 ? "bg-red-400" : "bg-green-400"
+                className={`font-bold text-white px-2 py-1 rounded-md d ${
+                  client.role == "cliente" ? "bg-green-400" : "bg-red-400"
                 }`}
               >
                 {client.debt}
@@ -65,15 +66,23 @@ const ClientDetail = ({ client }: { client: Client }) => {
           to="/dashboard"
           className="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-600"
         >
-          Go to Dashboard
+          Back to Dashboard
         </Link>
 
-        <button
-          onClick={() => handleOpenEditModal(client._id)}
-          className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600"
-        >
-          Update Client
-        </button>
+        <div className="flex gap-4">
+          <button
+            onClick={() => handleOpenEditModal(normalizeId(client))}
+            className="bg-green-500 text-white font-bold py-2 px-4 rounded hover:bg-green-600"
+          >
+            Update Client
+          </button>
+          <button
+            onClick={() => setConfirm(true)}
+            className="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-600"
+          >
+            Delete Client
+          </button>
+        </div>
       </div>
     </div>
   );

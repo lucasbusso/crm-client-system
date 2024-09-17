@@ -1,20 +1,20 @@
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import EditForm from "./EditForm";
-import { useUpdateContext } from "../context";
+import { ReactElement } from "react";
 
-const EditModalComponent = (): JSX.Element => {
-  const { openModal, setOpenModal, setClientUpdate } = useUpdateContext();
-
-  function closeModal() {
-    setOpenModal(false);
-    setClientUpdate(null);
-  }
-
+const CustomModal = ({
+  children,
+  state,
+  fn,
+}: {
+  children: ReactElement;
+  state: boolean;
+  fn: () => void;
+}): JSX.Element => {
   return (
     <>
       <Modal
-        show={openModal}
+        show={state}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
@@ -22,16 +22,16 @@ const EditModalComponent = (): JSX.Element => {
       >
         <Modal.Header className="justify-end border-none pb-0">
           <Button
-            onClick={closeModal}
+            onClick={fn}
             className="text-black text-2xl hover:bg-transparent border-none"
           >
             ✕
           </Button>
         </Modal.Header>
-        <EditForm />
+        {children}
       </Modal>
     </>
   );
 };
 
-export default EditModalComponent;
+export default CustomModal;

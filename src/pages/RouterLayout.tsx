@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { NavbarComponent, Notification } from "../components";
+import { EditForm, NavbarComponent, Notification } from "../components";
 import { Outlet } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import { getCookie } from "../utils";
 import { useNotificationContext, useUpdateContext } from "../context";
-import EditModalComponent from "../components/EditModalComponent";
 
 export const RouterLayout: React.FC<{}> = () => {
   const [, setCookie, remove] = useCookies();
@@ -33,7 +32,7 @@ export const RouterLayout: React.FC<{}> = () => {
       <NavbarComponent />
       <Outlet />
       {message && <Notification message={message} statusColor={statusColor} />}
-      {clientUpdate && <EditModalComponent />}
+      {clientUpdate && <EditForm />}
     </div>
   );
 };
