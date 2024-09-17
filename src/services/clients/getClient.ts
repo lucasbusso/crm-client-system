@@ -3,6 +3,7 @@ import { getCookie } from "../../utils";
 import { Client } from "../../interfaces/";
 
 const getClient = async (id: string | undefined): Promise<Client> => {
+  console.log(id);
   try {
     const token = getCookie("accessToken=");
     const response = await axios.get(

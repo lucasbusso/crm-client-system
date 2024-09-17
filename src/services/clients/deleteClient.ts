@@ -1,10 +1,10 @@
 import axios from "axios";
 import { getCookie } from "../../utils";
 
-const deleteClientService = async (id: string): Promise<any> => {
+const deleteClient = async (id: string): Promise<any> => {
   try {
     const token = getCookie("accessToken=");
-    const response = await axios.post(
+    const response = await axios.delete(
       `${import.meta.env.VITE_API_URL}/client/${id}`,
       {
         headers: {
@@ -18,4 +18,4 @@ const deleteClientService = async (id: string): Promise<any> => {
   }
 };
 
-export { deleteClientService };
+export { deleteClient };

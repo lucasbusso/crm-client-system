@@ -1,5 +1,6 @@
 export type Client = {
-  _id: string;
+  _id?: string;
+  id?: string;
   firstName: string;
   lastName: string;
   businessName: string;

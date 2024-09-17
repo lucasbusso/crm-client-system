@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { useClientContext, useUpdateContext } from "../context/";
 import { Link } from "react-router-dom";
+import { normalizeId } from "../utils/normalizeId";
 const LoadingSpinner = React.lazy(() => import("./Spinner"));
 
 const Client = () => {
@@ -19,8 +20,8 @@ const Client = () => {
         clients.map((client) => (
           <div
             className="mr-3 mb-3 bg-white shadow-sm rounded-md opacity-95 px-5 py-10"
-            key={client._id}
-            data-clientid={client._id}
+            key={normalizeId(client)}
+            data-clientid={normalizeId(client)}
           >
             <div className="flex gap-10">
               <p className="uppercase font-bold text-slate-600 py-2">
@@ -69,7 +70,10 @@ const Client = () => {
               </span>
             </p>
             <div className="flex justify-between my-3">
-              <Link className="font-semibold" to={`/dashboard/${client._id}`}>
+              <Link
+                className="font-semibold"
+                to={`/dashboard/${normalizeId(client)}`}
+              >
                 View details →
               </Link>
               <p className="text-sm text-slate-400">{client.updatedAt}</p>
@@ -77,7 +81,7 @@ const Client = () => {
 
             <p
               className="cursor-pointer font-semibold"
-              onClick={() => handleOpenEditModal(client._id)}
+              onClick={() => handleOpenEditModal(normalizeId(client))}
             >
               Update
             </p>
